@@ -140,6 +140,37 @@ class DataLayer {
 		return;
 	}
 
+	public function createRecordingForUser($userID, $songID, $artistID, $albumID, $month, $day, $year) {
+		$insertSQL = "insert into recordings (user_id, song_id, artist_id, album_id";
+		$valuesSQL = ") values ({$userID}, {$songID}, {$artistID}, {$albumID}";
+
+		if ($month != null) {
+			$insertSQL = $insertSQL .  ", month_recorded";
+			$valuesSQL = $valuesSQL . ", {$month}";
+		}
+
+		if ($day != null) {
+			$insertSQL = $insertSQL .  ", day_recorded";
+			$valuesSQL = $valuesSQL . ", {$day}";
+		}
+
+		if ($year != null) {
+			$insertSQL = $insertSQL .  ", year_recorded";
+			$valuesSQL = $valuesSQL . ", {$year}";
+		}
+
+		$valuesSQL = $valuesSQL . ")";
+		$sql = $insertSQL . $valuesSQL;
+		echo $sql;
+		$rs = $this->db->query($sql);
+
+		if ($rs != null) {
+			return $rs;
+		}
+			
+		return;
+	}
+
 	/*************************
 		Artist functions
 	**************************/
@@ -172,6 +203,17 @@ class DataLayer {
 
 	public function getAlbumForID($userID, $albumID) {
 		$sql = "select * from albums where user_id = {$userID} and id = {$albumID}";
+		$rs = $this->db->query($sql);
+
+		if ($rs->num_rows > 0) {
+			return $rs;
+		}
+			
+		return;
+	}
+
+	public function getAlbumsForUser($userID) {
+		$sql = "select * from albums where user_id = {$userID}";
 		$rs = $this->db->query($sql);
 
 		if ($rs->num_rows > 0) {

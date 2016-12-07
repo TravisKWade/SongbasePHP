@@ -18,7 +18,7 @@
 			Setters
 		*********************/
 		public function setArtistID($id) {
-			$this->songID = $id;
+			$this->artistID = $id;
 		}
 
 		public function setName($name) {
