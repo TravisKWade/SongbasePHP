@@ -92,11 +92,13 @@
 			echo "<tr>";
 			echo "<td><a href='editRecording.php?rec={$recording->getRecordingID()}'> EDIT </a></td>";
 			echo "<td><a href='artistDetails.php?art={$artist->getArtistID()}'> {$artist->getName()} </a></td>";
-			echo "<td><a href='albumDetails.php?art={$album->getAlbumID()}'> {$album->getName()} </a></td>";
+			echo "<td><a href='albumDetails.php?al={$album->getAlbumID()}'> {$album->getName()} </a></td>";
 			echo "<td>{$recording->getDateRecorded()}</td>";
 			echo "</tr>";
 		} 
 	?>
 	</table>
+	<br /><br />
+	<a href="addRecording.php?song=<? echo $_GET['song'] ?>"> Add Recording </a>
 </body>
 </html>

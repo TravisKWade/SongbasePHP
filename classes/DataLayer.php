@@ -65,6 +65,17 @@ class DataLayer {
 		return;
 	}
 
+	public function getSongsForAlbum($albumID) {
+		$sql = "select * from album_song_order where album_id = {$albumID} order by ordinal";
+		$rs = $this->db->query($sql);
+		
+		if ($rs->num_rows > 0) {
+			return $rs;
+		}
+			
+		return;
+	}
+
 	public function createSongForUser($userID, $name, $composerID, $month, $day, $year) {
 		$sql = "insert into songs (user_id, name, composer_id, month_written, day_written, year_written) values ({$userID}, '{$name}', {$composerID}, {$month}, {$day}, {$year})";
 		$rs = $this->db->query($sql);
@@ -109,6 +120,17 @@ class DataLayer {
 
 	public function getRecordingsForSong($songID) {
 		$sql = "select * from recordings where song_id = {$songID} order by year_recorded, month_recorded, day_recorded";
+		$rs = $this->db->query($sql);
+
+		if ($rs->num_rows > 0) {
+			return $rs;
+		}
+			
+		return;
+	}
+
+	public function getRecordingForID($recordingID) {
+		$sql = "select * from recordings where id = {$recordingID}";
 		$rs = $this->db->query($sql);
 
 		if ($rs->num_rows > 0) {
