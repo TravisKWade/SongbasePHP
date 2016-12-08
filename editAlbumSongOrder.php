@@ -13,7 +13,7 @@
 	} 
 
 	$db = new DataLayer();
-	$orderError = "";
+	$recordingArray = array();
 
 	$albumRS = $db->getAlbumForID($_SESSION['groupID'], $_GET['al']);
 	$albumRow = $albumRS->fetch_assoc();
@@ -25,8 +25,35 @@
 
 	$albumRecordingsOrderRS = $db->getRecordingsForAlbumWithOrder($album->getAlbumID());
 
-	if ($albumRecordingsOrderRS == null) {
-		$orderError = "** The order of the songs has not been set";
+	if ($albumRecordingsOrderRS != null) {
+		while($albumRecordingRow = $albumRecordingsOrderRS->fetch_assoc()) {
+			$recording = new Recording($albumRecordingRow);
+			$recording->setOrdinal($albumRecordingRow['ordinal']);
+			$recordingArray[$recording->getRecordingID()] = $recording;
+
+			$songRS = $db->getSongForUser($_SESSION['userID'], $recording->getSongID());
+			$songRow = $songRS->fetch_assoc();
+			$song = new Song($songRow);
+
+			echo "{$song->getName()}";
+			echo "<br />";
+		}
+	} else {
+		$albumRecordingsRS = $db->getRecordingsForAlbum($album->getAlbumID());
+
+		if ($albumRecordingsRS != null) {
+			while($albumRecordingRow = $albumRecordingsRS->fetch_assoc()) {
+				$recording = new Recording($albumRecordingRow);
+				$recordingArray[$recording->getRecordingID()] = $recording;
+
+				$songRS = $db->getSongForUser($_SESSION['userID'], $recording->getSongID());
+				$songRow = $songRS->fetch_assoc();
+				$song = new Song($songRow);
+
+				echo "{$song->getName()}";
+				echo "<br />";
+			}
+		}
 	}
 ?>
 <html>
@@ -37,7 +64,7 @@
 </head>
 <body>
 	<div>
-		Songbase - ALBUM DETAILS
+		Songbase - EDIT ALBUM SONG ORDER
 	</div>
 
 	User: <? echo $_SESSION['user']; ?>
@@ -61,26 +88,12 @@
 	Album Songs
 	<br />
 	<?
-		$albumRecordingsRS = $db->getRecordingsForAlbum($album->getAlbumID());
+		foreach($recordingArray as $recording) {
 
-		if ($albumRecordingsRS != null) {
-			while($albumRecordingRow = $albumRecordingsRS->fetch_assoc()) {
-				$recording = new Recording($albumRecordingRow);
-
-				$songRS = $db->getSongForUser($_SESSION['userID'], $recording->getSongID());
-				$songRow = $songRS->fetch_assoc();
-				$song = new Song($songRow);
-
-				echo "{$song->getName()}";
-				echo "<br />";
-			}
 		}
-
-		echo $orderError;
 	?>
 	<br /><br />
-	<a href="editAlbum.php?al=<? echo $_GET['al'] ?>">edit album</a> <br />
-	<a href="editAlbumSongOrder.php?al=<? echo $_GET['al'] ?>">edit album song order</a><br />
-	** to edit the songs on the album, edit the recordings
+	<a href="editAlbum.php?al=<? echo $_GET['al'] ?>">edit album</a>
+	<a href="editAlbumSongOrder.php?al=<? echo $_GET['al'] ?>">edit album</a>
 </body>
 </html>

@@ -8,6 +8,7 @@
 		public $dayRecorded;
 		public $monthRecorded;
 		public $yearRecorded;
+		public $ordinal;
 		public $userID;
 
 		/********************
@@ -21,6 +22,7 @@
 			$this->setDayRecorded($arrayValues['day_recorded']);
 			$this->setMonthRecorded($arrayValues['month_recorded']);
 			$this->setYearRecorded($arrayValues['year_recorded']);
+			$this->setOrdinal($arrayValues['ordinal']);
 			$this->setUserID($arrayValues['user_id']);
 		}
 
@@ -53,6 +55,10 @@
 
 		public function setYearRecorded($year) {
 			$this->yearRecorded = $year;
+		}
+
+		public function setOrdinal($ordinal) {
+			$this->ordinal = $ordinal;
 		}
 
 		public function setUserID($userID) {
@@ -88,6 +94,10 @@
 
 		public function getYearRecorded() {
 			return $this->yearRecorded;
+		}
+
+		public function getOrdinal() {
+			return $this->ordinal;
 		}
 
 		public function getUserID(){

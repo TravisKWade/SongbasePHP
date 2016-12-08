@@ -19,21 +19,21 @@
 	<script src="scripts/jquery.js"></script>
 </head>
 <body>
+	<div>
+		Songbase - ARTISTS
+	</div>
+
 	User: <? echo $_SESSION['user']; ?>
 	<form action="logout.php">
 		<input type="submit" value="Logout" />
 	</form>
-	<div>
-		Songbase
-	</div>
 	<ul>
 		<li><a href="songs.php">Songs</a></li>
 		<li><a href="artists.php">Artists</a></li>
+		<li><a href="albums.php">Albums</a></li>
 		<li><a href="composers.php">Composers</a></li>
 	</ul>
-
 	<br /><br />
-	<a href="newSong.php">New Artist</a> <br /><br />
 	Artist List <br />
 
 	<? 
@@ -51,5 +51,7 @@
 			echo "There are no artists yet";
 		}
 	?>
+	<br /><br />
+	<a href="newSong.php">New Artist</a>
 </body>
 </html>

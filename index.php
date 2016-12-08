@@ -1,20 +1,31 @@
-<!DOCTYPE html>
+<?php
+	ob_start();
+	session_start();
+
+	if(!isset($_SESSION['user']) || !isset($_SESSION['userID'])) {
+		header("location:login.php");
+	} 
+?>
 <html>
 <head>
 	<title> Songbase </title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="stylesheet" type="text/css" href="styles/songbase.css" />
 	<script src="scripts/jquery.js"></script>
 </head>
 <body>
 	<div>
-		Songbase
+		Songbase 
 	</div>
-	<div>
-		<a href="songs.php">Songs</a>
-		<a href="artists.php">Artists</a>
-		<a href="composers.php">Composers</a>
-		<a href="users.php">Users</a>
-	</div>
+
+	User: <? echo $_SESSION['user']; ?>
+	<form action="logout.php">
+		<input type="submit" value="Logout" />
+	</form>
+	<ul>
+		<li><a href="songs.php">Songs</a></li>
+		<li><a href="artists.php">Artists</a></li>
+		<li><a href="albums.php">Albums</a></li>
+		<li><a href="composers.php">Composers</a></li>
+	</ul>
 </body>
 </html>

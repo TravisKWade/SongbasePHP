@@ -19,19 +19,20 @@
 	<script src="scripts/jquery.js"></script>
 </head>
 <body>
+	<div>
+		Songbase - SONG LIST
+	</div>
+
 	User: <? echo $_SESSION['user']; ?>
 	<form action="logout.php">
 		<input type="submit" value="Logout" />
 	</form>
-	<div>
-		Songbase
-	</div>
 	<ul>
 		<li><a href="songs.php">Songs</a></li>
 		<li><a href="artists.php">Artists</a></li>
+		<li><a href="albums.php">Albums</a></li>
 		<li><a href="composers.php">Composers</a></li>
 	</ul>
-
 	<br /><br />
 	<a href="newSong.php">New Song</a> <br /><br />
 	Song List <br />

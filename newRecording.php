@@ -67,6 +67,7 @@
 	<ul>
 		<li><a href="songs.php">Songs</a></li>
 		<li><a href="artists.php">Artists</a></li>
+		<li><a href="albums.php">Albums</a></li>
 		<li><a href="composers.php">Composers</a></li>
 	</ul>
 	<? echo $error ?>
