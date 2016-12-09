@@ -141,7 +141,7 @@ class DataLayer {
 	}
 
 	public function getRecordingsForAlbumWithOrder($albumID) {
-		$sql = "select recordings.id, recordings.song_id, recordings.artist_id, recordings.album_id, recordings.day_recorded, recordings.month_recorded, recordings.year_recorded, recordings.user_id, album_song_order.ordinal from recordings inner join album_song_order on recordings.id = album_song_order.recording_id where recordings.album_id = {$albumID} order by album_song_order.ordinal";
+		$sql = "select distinct recordings.id, recordings.song_id, recordings.artist_id, recordings.album_id, recordings.day_recorded, recordings.month_recorded, recordings.year_recorded, recordings.user_id, album_song_order.ordinal from recordings inner join album_song_order on recordings.id = album_song_order.recording_id where recordings.album_id = {$albumID} order by album_song_order.ordinal";
 		$rs = $this->db->query($sql);
 
 		if ($rs->num_rows > 0) {
@@ -176,6 +176,31 @@ class DataLayer {
 		$rs = $this->db->query($sql);
 
 		if ($rs != null) {
+			return $rs;
+		}
+			
+		return;
+	}
+
+	public function updateRecordingOrderForAlbum($userID, $recordingArray) {
+		$index = 1;
+		foreach($recordingArray as $recording) {
+			if (!$this->checkRecordingOrderForAlbum($recording->getRecordingID(), $recording->getAlbumID())){
+				$sql = "insert into album_song_order (album_id, recording_id, song_id, ordinal, user_id) values ({$recording->getAlbumID()}, {$recording->getRecordingID()}, {$recording->getSongID()}, {$index}, {$userID})";
+			} else {
+				$sql = "update album_song_order set ordinal = {$index} where recording_id = {$recording->getRecordingID()} and album_id = {$recording->getAlbumID()}";
+			}
+
+			$rs = $this->db->query($sql);
+			$index = $index + 1;
+		}
+	}
+
+	public function checkRecordingOrderForAlbum($recordingID, $albumID) {
+		$sql = "select * from album_song_order where recording_id = {$recordingID} and album_id = {$albumID}";
+		$rs = $this->db->query($sql);
+
+		if ($rs->num_rows > 0) {
 			return $rs;
 		}
 			

@@ -7,7 +7,7 @@
 	include("classes/Recording.php");
 	include("classes/Artist.php");
 	include("classes/Album.php");
-
+	
 	if(!isset($_SESSION['user']) || !isset($_SESSION['userID'])) {
 		header("location:login.php");
 	} 
@@ -26,35 +26,48 @@
 	$albumRecordingsOrderRS = $db->getRecordingsForAlbumWithOrder($album->getAlbumID());
 
 	if ($albumRecordingsOrderRS != null) {
+		$index = 1;
 		while($albumRecordingRow = $albumRecordingsOrderRS->fetch_assoc()) {
 			$recording = new Recording($albumRecordingRow);
 			$recording->setOrdinal($albumRecordingRow['ordinal']);
-			$recordingArray[$recording->getRecordingID()] = $recording;
-
-			$songRS = $db->getSongForUser($_SESSION['userID'], $recording->getSongID());
-			$songRow = $songRS->fetch_assoc();
-			$song = new Song($songRow);
-
-			echo "{$song->getName()}";
-			echo "<br />";
+			$recordingArray[$index] = $recording;
+			$index = $index + 1;
 		}
 	} else {
 		$albumRecordingsRS = $db->getRecordingsForAlbum($album->getAlbumID());
 
 		if ($albumRecordingsRS != null) {
+			$index = 1;
 			while($albumRecordingRow = $albumRecordingsRS->fetch_assoc()) {
 				$recording = new Recording($albumRecordingRow);
-				$recordingArray[$recording->getRecordingID()] = $recording;
+				$recordingArray[$index] = $recording;
 
-				$songRS = $db->getSongForUser($_SESSION['userID'], $recording->getSongID());
-				$songRow = $songRS->fetch_assoc();
-				$song = new Song($songRow);
-
-				echo "{$song->getName()}";
-				echo "<br />";
+				$index = $index + 1;
 			}
 		}
 	}
+
+	$count = $_GET['count'];
+
+	if(!empty($_POST['up'])) {
+		if ($count > 1) {
+			$tempRec = $recordingArray[$count-1];
+			$recordingArray[$count-1] = $recordingArray[$count];
+			$recordingArray[$count] = $tempRec;
+		}
+
+		$db->updateRecordingOrderForAlbum($_SESSION['groupID'], $recordingArray);
+
+	} else if(!empty($_POST['down'])) {
+		if ($count < count($recordingArray)-2) {
+			$tempRec = $recordingArray[$count+1];
+			$recordingArray[$count+1] = $recordingArray[$count];
+			$recordingArray[$count] = $tempRec;
+		}
+		
+		$db->updateRecordingOrderForAlbum($_SESSION['groupID'], $recordingArray);
+	}
+
 ?>
 <html>
 <head>
@@ -88,12 +101,22 @@
 	Album Songs
 	<br />
 	<?
+		$count = 1;
 		foreach($recordingArray as $recording) {
-
+			$songRS = $db->getSongForUser($_SESSION['userID'], $recording->getSongID());
+			$songRow = $songRS->fetch_assoc();
+			$song = new Song($songRow);
+	?>
+	<form action="editAlbumSongOrder.php?al=<? echo $album->getAlbumID() ?>&rec=<? echo $recording->getRecordingID() ?>&count=<? echo $count ?>" method="post">
+		<? echo $count ?>.
+		<input type="submit" name="up" value="Up">
+		<input type="submit" name="down" value="Down">
+		<? echo $song->getName() ?>
+	</form>
+	<?
+			$count = $count + 1;
 		}
 	?>
-	<br /><br />
-	<a href="editAlbum.php?al=<? echo $_GET['al'] ?>">edit album</a>
-	<a href="editAlbumSongOrder.php?al=<? echo $_GET['al'] ?>">edit album</a>
+
 </body>
 </html>

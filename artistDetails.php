@@ -3,7 +3,6 @@
 	session_start();
 	include("classes/DataLayer.php");
 	include("classes/Song.php");
-	include("classes/Composer.php");
 	include("classes/Recording.php");
 	include("classes/Artist.php");
 	include("classes/Album.php");
@@ -38,7 +37,7 @@
 </head>
 <body>
 	<div>
-		Songbase - ALBUM DETAILS
+		Songbase - ARTIST DETAILS
 	</div>
 
 	User: <? echo $_SESSION['user']; ?>
