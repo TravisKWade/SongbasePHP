@@ -42,7 +42,7 @@
 			if ($rows > 0) {
 				while($row = $rs->fetch_assoc()) {
 					$artist = new Artist($row);
-					echo "<a href='editArtist.php?art={$artist->getArtistID()}'> EDIT </a> -- {$artist->getName()}<br />";
+					echo "<a href='editArtist.php?art={$artist->getArtistID()}'> EDIT </a> -- <a href='artistDetails.php?art={$artist->getArtistID()}'>{$artist->getName()}</a><br />";
 				}
 			} else {
 				echo "There are no artists yet";

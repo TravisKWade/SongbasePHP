@@ -259,6 +259,17 @@ class DataLayer {
 		return;
 	}
 
+	public function getAlbumsForArtist($artistID) {
+		$sql = "select * from albums where artist_id = {$artistID} order by year_released";
+		$rs = $this->db->query($sql);
+
+		if ($rs->num_rows > 0) {
+			return $rs;
+		}
+			
+		return;
+	}
+
 	public function createAlbumForUser($userID, $artistID, $name, $year) {
 		$sql = "insert into albums (user_id, artist_id, name, year_released) values ({$userID}, {$artistID}, '{$name}', {$year})";
 		$rs = $this->db->query($sql);
