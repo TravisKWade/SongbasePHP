@@ -7,6 +7,7 @@
 	include("classes/Recording.php");
 	include("classes/Artist.php");
 	include("classes/Album.php");
+	include("classes/SongLyrics.php");
 
 	if(!isset($_SESSION['user']) || !isset($_SESSION['userID'])) {
 		header("location:login.php");
@@ -17,6 +18,15 @@
 	$rs = $db->getSongForUser($_SESSION['groupID'], $_GET['song']);
 	$row = $rs->fetch_assoc();
 	$song = new Song($row);
+
+	$lyricsRS = $db->getLyricsForSong($song->getSongID());
+	
+	if ($lyricsRS != null) {
+		$lyricRow = $lyricsRS->fetch_assoc();
+		$lyrics = new SongLyrics($lyricRow);
+	} else {
+		$lyrics = null;
+	}
 
 	$compRS = $db->getComposerForID($_SESSION['groupID'], $song->getComposerID());
 	$compRow = $compRS->fetch_assoc();
@@ -69,6 +79,14 @@
 		</tr>
 	</table>
 
+	<br /><br />
+	<?
+		if($lyrics != null) {
+			echo "<a href='lyrics.php?song={$song->getSongID()}'> Song Lyrics</a>";
+		} else {
+			echo "<a href='newLyrics.php?song={$song->getSongID()}'> Add Song Lyrics</a>";
+		}
+	?>
 	<br /><br />
 	Recordings <br />
 

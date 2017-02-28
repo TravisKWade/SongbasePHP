@@ -77,6 +77,33 @@ class DataLayer {
 		return;
 	}
 
+	/***************************
+		Song Lyric functions
+	****************************/
+
+	public function getLyricsForSong($songID) {
+		$sql = "select * from lyrics where song_id = {$songID}";
+		$rs = $this->db->query($sql);
+
+		if ($rs->num_rows > 0) {
+			return $rs;
+		}
+			
+		return;
+	}
+
+	public function createLyricsForSong($userID, $songID, $lyrics) {
+		$sql = "insert into lyrics (user_id, song_id, lyrics) values ({$userID}, {$songID}, '{$lyrics}')";
+		echo $sql;
+		$rs = $this->db->query($sql);
+
+		if ($rs->num_rows > 0) {
+			return $rs;
+		}
+			
+		return;
+	}
+
 	/*************************
 		Composer functions
 	**************************/
