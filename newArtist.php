@@ -3,77 +3,61 @@
 	session_start();
 	include("classes/DataLayer.php");
 	include("classes/Artist.php");
-	include("classes/Album.php");
 
 	if(!isset($_SESSION['user']) || !isset($_SESSION['userID'])) {
 		header("location:login.php");
-	} 
+	}
 
 	$db = new DataLayer();
 	$error = "";
 
-	$rs = $db->getArtistForID($_SESSION['groupID'], $_GET['art']);
-	$rows = $rs->num_rows;
-
-	$row = $rs->fetch_assoc();
-	$artist = new Artist($row);
-	
-	
-
-	if(!empty($_POST['submit'])){	
+	if(!empty($_POST['submit'])){
 		if(!empty($_POST['name'])){
-			$rs = $db->updateArtistForUser($_SESSION['groupID'], $_POST['name'], $_GET['art']);
+			$rs = $db->createArtistForUser($_SESSION['groupID'], $_POST['name']);
 		
 			if($rs != null) {
 				header("location: artists.php");
 			} else {
-				$error = "There was a problem updating the artist";
+				$error = "There was a problem creating the artist";
 			}
 		} else {
 			$error = "All fields are required";
 		}
 	}
-
 ?>
+
 <html>
 <head>
-	<title> Songbase </title>
-	<link rel="stylesheet" type="text/css" href="styles/songbase.css" />
-	<script src="scripts/jquery.js"></script>
+	<title>Songbase</title>
 </head>
 <body>
 	<div>
-		Songbase - EDIT ARTIST
+		Songbase - NEW ARTIST
 	</div>
 
 	User: <? echo $_SESSION['user']; ?>
 	<form action="logout.php">
 		<input type="submit" value="Logout" />
 	</form>
-	<div>
-		Songbase
-	</div>
 	<ul>
 		<li><a href="songs.php">Songs</a></li>
 		<li><a href="artists.php">Artists</a></li>
 		<li><a href="albums.php">Albums</a></li>
 		<li><a href="composers.php">Composers</a></li>
 	</ul>
-	<br /><br />
 	<? echo $error;?>
-	<div id="edit_artist_form">
-		<form action="editArtist.php?art=<? echo $artist->getArtistID() ?>" method="post">
+	<div id="new_artist_form">
+		<form action="newArtist.php?from=<? echo $_SERVER['HTTP_REFERER'] ?>" method="post">
 			<table>
 				<tr>
 					<td>Artist Name:</td>
 					<td>
-						<input type="text" name="name" value="<? echo $artist->getName() ?>" /></td>
+						<input type="text" name="name" /></td>
 					</td>
 				</tr>
 			</table>
-			<input type="submit" name="submit" value="Update Artist">
+			<input type="submit" name="submit" value="Add New Artist">
 		</form>
 	</div>
-
 </body>
 </html>

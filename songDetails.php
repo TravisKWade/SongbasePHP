@@ -102,6 +102,5 @@
 	</table>
 	<br /><br />
 	<a href="newRecording.php?song=<? echo $_GET['song'] ?>"> Add Recording </a><br /><br />
-	<a href="newAlbum.php"> Add Album </a>
 </body>
 </html>

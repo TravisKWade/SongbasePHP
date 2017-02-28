@@ -52,6 +52,6 @@
 		}
 	?>
 	<br /><br />
-	<a href="newSong.php">New Artist</a>
+	<a href="newArtist.php">New Artist</a>
 </body>
 </html>

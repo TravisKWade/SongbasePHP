@@ -31,7 +31,7 @@ class DataLayer {
 	public function loginUser($email, $password) {
 		$sql = "select * from users where username='{$email}' and password='{$password}' and active=1";
 		$rs = $this->db->query($sql);
-		echo $sql;
+		
 		if ($rs->num_rows > 0) {
 			return $rs;
 		}
@@ -227,6 +227,28 @@ class DataLayer {
 		$rs = $this->db->query($sql);
 
 		if ($rs->num_rows > 0) {
+			return $rs;
+		}
+			
+		return;
+	}
+
+	public function createArtistForUser($userID, $artistName) {
+		$sql = "insert into artists (user_id, name) values ({$userID}, '{$artistName}')";
+		$rs = $this->db->query($sql);
+
+		if ($rs != null) {
+			return $rs;
+		}
+			
+		return;
+	}
+
+	public function updateArtistForUser($userID, $artistName, $artistID) {
+		$sql = "update artists set name = '{$artistName}' where id = {$artistID} and user_id = {$userID}";
+		$rs = $this->db->query($sql);
+
+		if ($rs != null) {
 			return $rs;
 		}
 			

@@ -81,6 +81,8 @@
 	<br /><br />
 	<a href="editAlbum.php?al=<? echo $_GET['al'] ?>">edit album</a> <br />
 	<a href="editAlbumSongOrder.php?al=<? echo $_GET['al'] ?>">edit album song order</a><br />
-	** to edit the songs on the album, edit the recordings
+	** to edit the songs on the album, edit the recordings<br /><br />
+
+	<a href="newAlbum.php">New Album</a> <br /><br />
 </body>
 </html>
