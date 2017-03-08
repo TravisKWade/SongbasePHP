@@ -2,6 +2,7 @@
 	ob_start();
 	session_start();
 	include("classes/DataLayer.php");
+	include("classes/FileManager.php");
 	include("classes/Artist.php");
 	include("classes/Album.php");
 
@@ -10,6 +11,7 @@
 	} 
 
 	$db = new DataLayer();
+	$fm = new FileManager();
 	$error = "";
 
 	$rs = $db->getArtistForID($_SESSION['groupID'], $_GET['art']);
@@ -18,10 +20,9 @@
 	$row = $rs->fetch_assoc();
 	$artist = new Artist($row);
 	
-	
-
 	if(!empty($_POST['submit'])){	
 		if(!empty($_POST['name'])){
+			$fm->updateFolderForArtist($_SESSION['groupID'], $artist->getName(), $_POST['name'], $artist->getArtistID());
 			$rs = $db->updateArtistForUser($_SESSION['groupID'], $_POST['name'], $_GET['art']);
 		
 			if($rs != null) {

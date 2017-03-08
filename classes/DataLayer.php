@@ -94,10 +94,20 @@ class DataLayer {
 
 	public function createLyricsForSong($userID, $songID, $lyrics) {
 		$sql = "insert into lyrics (user_id, song_id, lyrics) values ({$userID}, {$songID}, '{$lyrics}')";
-		echo $sql;
 		$rs = $this->db->query($sql);
 
-		if ($rs->num_rows > 0) {
+		if ($rs != null) {
+			return $rs;
+		}
+			
+		return;
+	}
+
+	public function updateLyricsForSong($userID, $songID, $lyrics) {
+		$sql = "update lyrics set lyrics = '{$lyrics}' where song_id = {$songID} and user_id = {$userID}";
+		$rs = $this->db->query($sql);
+
+		if ($rs != null) {
 			return $rs;
 		}
 			
@@ -260,12 +270,24 @@ class DataLayer {
 		return;
 	}
 
+	public function getArtistIDForName($userID, $artistName) {
+		$sql = "select id from artists where user_id = {$userID} and name = '{$artistName}'";
+		$rs = $this->db->query($sql);
+
+		if ($rs != null) {
+			$artRow = $rs->fetch_assoc();
+			return $artRow['id'];
+		}
+			
+		return;
+	}
+
 	public function createArtistForUser($userID, $artistName) {
 		$sql = "insert into artists (user_id, name) values ({$userID}, '{$artistName}')";
 		$rs = $this->db->query($sql);
 
 		if ($rs != null) {
-			return $rs;
+			return $this->getArtistIDForName($userID, $artistName);
 		}
 			
 		return;

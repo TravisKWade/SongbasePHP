@@ -15,28 +15,36 @@
 	$row = $rs->fetch_assoc();
 	$song = new Song($row);
 
+	$lyricsRS = $db->getLyricsForSong($song->getSongID());
+	
+	if ($lyricsRS != null) {
+		$lyricRow = $lyricsRS->fetch_assoc();
+		$lyrics = new SongLyrics($lyricRow);
+	} else {
+		$lyrics = null;
+	}
+
 	$error = "";
 
 	if(!empty($_POST['submit'])){	
 		if(!empty($_POST['lyrics'])){
-			// work on the lyrics to make them database ready
 			$lyric = str_replace("\n", '<br />', $_POST['lyrics']);
 			$lyric = str_replace("\r", "", $lyric);
 			$lyric = str_replace("'", "\'", $lyric);
 
-			$rs = $db->createLyricsForSong($_SESSION['groupID'], $_GET['song'], $lyric);
+			$rs = $db->updateLyricsForSong($_SESSION['groupID'], $_GET['song'], $lyric);
 		
 			if($rs != null) {
 				header("location:" . $_GET['from']);
 			} else {
-				$error = "There was a problem adding the lyrics";
+				$error = "There was a problem updating the lyrics";
 			}
-			
 		} else {
 			$error = "All fields are required";
 		}
 	}
 
+	$lyric = str_replace("<br />", "\n", $lyrics->lyrics);
 ?>
 <html>
 <head>
@@ -47,7 +55,7 @@
 </head>
 <body>
 	<div>
-		Songbase - ADD SONG LYRICS
+		Songbase - EDIT SONG LYRICS
 	</div>
 
 	User: <? echo $_SESSION['user']; ?>
@@ -67,10 +75,10 @@
 	<br />
 	Song Lyrics:
 	<div id="new_lyrics_form">
-		<form action="newLyrics.php?song=<? echo $song->getSongID() ?>&from=<? echo $_SERVER['HTTP_REFERER'] ?>" method="post">
-			<textarea name="lyrics" rows="30" cols="80"></textarea>
+		<form action="editLyrics.php?song=<? echo $song->getSongID() ?>&from=<? echo $_SERVER['HTTP_REFERER'] ?>" method="post">
+			<textarea name="lyrics" rows="30" cols="80"><? echo $lyric ?></textarea>
 			<br /><br />
-			<input type="submit" name="submit" value="Add Lyrics">
+			<input type="submit" name="submit" value="Update Lyrics">
 		</form>
 	</div>
 	

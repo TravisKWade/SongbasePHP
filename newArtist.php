@@ -2,6 +2,7 @@
 	ob_start();
 	session_start();
 	include("classes/DataLayer.php");
+	include("classes/FileManager.php");
 	include("classes/Artist.php");
 
 	if(!isset($_SESSION['user']) || !isset($_SESSION['userID'])) {
@@ -9,13 +10,15 @@
 	}
 
 	$db = new DataLayer();
+	$fm = new FileManager();
 	$error = "";
 
 	if(!empty($_POST['submit'])){
 		if(!empty($_POST['name'])){
 			$rs = $db->createArtistForUser($_SESSION['groupID'], $_POST['name']);
-		
+			
 			if($rs != null) {
+				$fm->createFolderForArtist($_SESSION['groupID'], $rs, $_POST['name']);
 				header("location: artists.php");
 			} else {
 				$error = "There was a problem creating the artist";
