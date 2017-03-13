@@ -1,5 +1,7 @@
 <?php
 
+include("UploadException.php");
+
 class FileManager {
 
 	/********************
@@ -63,6 +65,45 @@ class FileManager {
 
 		if (!is_dir($path)) {
 			mkdir($path, 0777, true);
+		}
+	}
+
+	public function updateFolderForAlbum($userID, $artistID, $artistName, $albumID, $oldName, $newName) {
+		$artistPath = 'songs/'.$userID.'/'.str_replace(" ", "_", $artistName)."_".$artistID;
+		$oldPath = $artistPath."/".str_replace(" ", "_", $oldName)."_".$albumID;
+		$newPath = $artistPath."/".str_replace(" ", "_", $newName)."_".$albumID;
+
+		if (!is_dir($oldPath)) {
+			$this->createFolderForAlbum($userID, $artistID, $artistName, $albumID, $newName);
+		} else {
+			rename($oldPath, $newPath);
+		}
+	}
+
+	/********************
+		Recording
+	*********************/
+
+	public function uploadRecording($userID, $file, $songName, $recordingID, $albumID, $albumName, $artistID, $artistName) {
+		$artistPath = 'songs/'.$userID.'/'.str_replace(" ", "_", $artistName)."_".$artistID;
+		$path = $artistPath."/".str_replace(" ", "_", $albumName)."_".$albumID;
+		$recordingName = str_replace(" ", "_", $songName)."_".$recordingID;
+		$fullPath = $path."/".$recordingName.".mp3";
+
+		if (!is_dir($path)) {
+			$this->createFolderForAlbum($userID, $artistID, $artistName, $albumID, $albumName);
+		}
+
+		if (file_exists($fullPath)) {
+			return 0;
+		}
+
+		move_uploaded_file($file, $fullPath);
+
+		if ($_FILES['file']['error'] === UPLOAD_ERR_OK) { 
+			return 1;
+		} else { 
+			throw new UploadException($_FILES['file']['error']); 
 		}
 	}
 }

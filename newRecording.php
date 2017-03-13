@@ -2,6 +2,7 @@
 	ob_start();
 	session_start();
 	include("classes/DataLayer.php");
+	include("classes/FileManager.php");
 	include("classes/Song.php");
 	include("classes/Recording.php");
 	include("classes/Artist.php");
@@ -13,21 +14,46 @@
 
 	$error = "";
 	$db = new DataLayer();
+	$fm = new FileManager();
+
+	$rs = $db->getSongForUser($_SESSION['groupID'], $_GET['song']);
+	$row = $rs->fetch_assoc();
+	$song = new Song($row);
 
 	if(!empty($_POST['submit'])){	
 		$rs = $db->createRecordingForUser($_SESSION['groupID'], $_GET['song'], $_POST['artist'], $_POST['album'], $_POST['month'], $_POST['day'], $_POST['year']);
 		
 		if($rs != null) {
-			header("location:songDetails.php?song={$_GET['song']}");
+			if ($_FILES['file']['name']) {
+				$recordingID = $db->getLastRecordingIDForSong($_GET['song'], $_POST['artist'], $_POST['album']);
+				$artRS = $db->getArtistForID($_SESSION['groupID'], $_POST['artist']);
+				$alRS = $db->getAlbumForID($_SESSION['groupID'], $_POST['album']);
+
+				$target_path = $target_path . basename( $_FILES['file']['name']); 
+
+				if ($artRS != null) {
+					$artist = new Artist($artRS->fetch_assoc());
+				}
+
+				if ($alRS != null) {
+					$album = new Album($alRS->fetch_assoc());
+				}
+
+				$result = $fm->uploadRecording($_SESSION['groupID'], $target_path, $song->getName(), $recordingID, $album->getAlbumID(), $album->getName(), $artist->getArtistID(), $artist->getName());
+
+				if($result == 1) {
+					header("location:songDetails.php?song={$_GET['song']}");
+				} else {
+					$error = "the recording file was not uploaded. <br />";
+				}
+			} else {
+				header("location:songDetails.php?song={$_GET['song']}");
+			}
 		} else {
 			$error = "There was a problem creating the recording";
 		}
 		
 	}
-
-	$rs = $db->getSongForUser($_SESSION['groupID'], $_GET['song']);
-	$row = $rs->fetch_assoc();
-	$song = new Song($row);
 
 	$artistArray = array();
 	$artRS = $db->getArtistsForUser($_SESSION['groupID']);
@@ -73,7 +99,7 @@
 	<? echo $error ?>
 	<? echo $song->getName() ?>
 	<div id="new_song_form">
-		<form action="newRecording.php?song=<? echo $_GET['song'] ?>" method="post">
+		<form action="newRecording.php?song=<? echo $_GET['song'] ?>" method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
 					<td>Artist:</td>
@@ -110,6 +136,11 @@
 				<tr>
 					<td>Year Recorded</td>
 					<td><input type="text" name="year" /></td>
+				</tr>
+				<tr><td><br /></td></tr>
+				<tr>
+					<td>Upload Recording **</td>
+					<td><input type="file" name="file" id="file" /></td>
 				</tr>
 			</table>
 			<input type="submit" name="submit" value="Add New Recording">

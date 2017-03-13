@@ -18,7 +18,17 @@
 			$rs = $db->createAlbumForUser($_SESSION['groupID'], $_POST['artist'], $_POST['name'], $_POST['year']);
 		
 			if($rs != null) {
-				header("location:" . $_GET['from']);
+				$artRS = $db->getArtistForID($_SESSION['groupID'], $_POST['artist']);
+				if ($artRS != null) {
+					$artRow = $artRS->fetch_assoc();
+					$artist = new Artist($artRow);
+					
+					$fm->createFolderForAlbum($_SESSION['groupID'], $artist->getArtistID(), $artist->getName(), $rs, $_POST['name']);
+					header("location:" . $_GET['from']);
+				} else {
+					$error = "Folder not created.";
+				}
+
 			} else {
 				$error = "There was a problem creating the album";
 			}

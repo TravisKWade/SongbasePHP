@@ -93,6 +93,7 @@
 	<table>
 		<tr>
 			<td></td>
+			<td></td>
 			<td>Artist</td>
 			<td>Album</td>
 			<td>Date</td>
@@ -111,6 +112,7 @@
 	
 			echo "<tr>";
 			echo "<td><a href='editRecording.php?rec={$recording->getRecordingID()}'> EDIT </a></td>";
+			echo "<td><a href='uploadRecording.php?rec={$recording->getRecordingID()}'> UPLOAD </a></td>";
 			echo "<td><a href='artistDetails.php?art={$artist->getArtistID()}'> {$artist->getName()} </a></td>";
 			echo "<td><a href='albumDetails.php?al={$album->getAlbumID()}'> {$album->getName()} </a></td>";
 			echo "<td>{$recording->getDateRecorded()}</td>";

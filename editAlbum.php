@@ -2,6 +2,7 @@
 	ob_start();
 	session_start();
 	include("classes/DataLayer.php");
+	include("classes/FileManager.php");
 	include("classes/Song.php");
 	include("classes/Composer.php");
 	include("classes/Recording.php");
@@ -13,13 +14,29 @@
 	} 
 
 	$db = new DataLayer();
+	$fm = new FileManager();
 
 	if(!empty($_POST['submit'])){	
 		if(!empty($_POST['name']) && !empty($_POST['year'])){
+
+			$albumRS = $db->getAlbumForID($_SESSION['groupID'], $_GET['al']);
+			$albumRow = $albumRS->fetch_assoc();
+			$album = new Album($albumRow);
+
 			$rs = $db->updateAlbumForID($_GET['al'], $_POST['artist'], $_POST['name'], $_POST['year']);
 		
 			if($rs != null) {
-				header("location:albumDetails.php?al=" . $_GET['al']);
+				$artRS = $db->getArtistForID($_SESSION['groupID'], $_POST['artist']);
+				if ($artRS != null) {
+					$artRow = $artRS->fetch_assoc();
+					$artist = new Artist($artRow);
+
+					$fm->updateFolderForAlbum($_SESSION['groupID'], $artist->getArtistID(), $artist->getName(), $album->getAlbumID(), $album->getName(), $_POST['name']);
+				} else {
+					$error = "Folder not created.";
+				}
+
+				//header("location:albumDetails.php?al=" . $_GET['al']);
 			} else {
 				$error = "There was a problem updating the album";
 			}

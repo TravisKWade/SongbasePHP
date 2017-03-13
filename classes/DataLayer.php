@@ -68,8 +68,7 @@ class DataLayer {
 	public function createSongForUser($userID, $name, $composerID, $month, $day, $year) {
 		$sql = "insert into songs (user_id, name, composer_id, month_written, day_written, year_written) values ({$userID}, '{$name}', {$composerID}, {$month}, {$day}, {$year})";
 		$rs = $this->db->query($sql);
-	
-		echo $rs;
+
 		if ($rs != null) {
 			return $rs;
 		}
@@ -177,8 +176,21 @@ class DataLayer {
 		return;
 	}
 
+	public function getLastRecordingIDForSong($songID, $artistID, $albumID) {
+		$sql = "select id from recordings where song_id = {$songID} and artist_id = {$artistID} and album_id = {$albumID} order by timestamp desc";
+		$rs = $this->db->query($sql);
+		
+		if ($rs->num_rows > 0) {
+			$row = $rs->fetch_assoc();
+			return $row['id'];
+		}
+			
+		return;
+	}
+
 	public function getRecordingsForAlbumWithOrder($albumID) {
 		$sql = "select distinct recordings.id, recordings.song_id, recordings.artist_id, recordings.album_id, recordings.day_recorded, recordings.month_recorded, recordings.year_recorded, recordings.user_id, album_song_order.ordinal from recordings inner join album_song_order on recordings.id = album_song_order.recording_id where recordings.album_id = {$albumID} order by album_song_order.ordinal";
+		echo $sql;
 		$rs = $this->db->query($sql);
 
 		if ($rs->num_rows > 0) {
@@ -209,7 +221,7 @@ class DataLayer {
 
 		$valuesSQL = $valuesSQL . ")";
 		$sql = $insertSQL . $valuesSQL;
-		echo $sql;
+		
 		$rs = $this->db->query($sql);
 
 		if ($rs != null) {
@@ -341,12 +353,24 @@ class DataLayer {
 		return;
 	}
 
+	public function getAlbumIDForName($userID, $albumName, $artistID) {
+		$sql = "select id from albums where user_id = {$userID} and name = '{$albumName}' and artist_id = {$artistID}";
+		$rs = $this->db->query($sql);
+
+		if ($rs != null) {
+			$albumRow = $rs->fetch_assoc();
+			return $albumRow['id'];
+		}
+			
+		return;
+	}
+
 	public function createAlbumForUser($userID, $artistID, $name, $year) {
 		$sql = "insert into albums (user_id, artist_id, name, year_released) values ({$userID}, {$artistID}, '{$name}', {$year})";
 		$rs = $this->db->query($sql);
 
 		if ($rs != null) {
-			return $rs;
+			return $this->getAlbumIDForName($userID, $name, $artistID);
 		}
 			
 		return;
