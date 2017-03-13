@@ -190,7 +190,6 @@ class DataLayer {
 
 	public function getRecordingsForAlbumWithOrder($albumID) {
 		$sql = "select distinct recordings.id, recordings.song_id, recordings.artist_id, recordings.album_id, recordings.day_recorded, recordings.month_recorded, recordings.year_recorded, recordings.user_id, album_song_order.ordinal from recordings inner join album_song_order on recordings.id = album_song_order.recording_id where recordings.album_id = {$albumID} order by album_song_order.ordinal";
-		echo $sql;
 		$rs = $this->db->query($sql);
 
 		if ($rs->num_rows > 0) {
@@ -222,6 +221,17 @@ class DataLayer {
 		$valuesSQL = $valuesSQL . ")";
 		$sql = $insertSQL . $valuesSQL;
 		
+		$rs = $this->db->query($sql);
+
+		if ($rs != null) {
+			return $rs;
+		}
+			
+		return;
+	}
+
+	public function updateRecordingForUser($userID, $recordingID, $artistID, $albumID, $month, $day, $year) {
+		$sql = "update recordings set artist_id = {$artistID}, album_id = {$albumID}, day_recorded = {$day}, year_recorded = {$year}, month_recorded = {$month} where id = {$recordingID} and user_id = {$userID}";
 		$rs = $this->db->query($sql);
 
 		if ($rs != null) {
