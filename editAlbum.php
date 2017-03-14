@@ -36,7 +36,7 @@
 					$error = "Folder not created.";
 				}
 
-				//header("location:albumDetails.php?al=" . $_GET['al']);
+				header("location:albumDetails.php?al=" . $_GET['al']);
 			} else {
 				$error = "There was a problem updating the album";
 			}

@@ -2,6 +2,7 @@
 	ob_start();
 	session_start();
 	include("classes/DataLayer.php");
+	include("classes/FileManager.php");
 	include("classes/Song.php");
 	include("classes/Composer.php");
 	include("classes/Recording.php");
@@ -14,6 +15,7 @@
 	} 
 
 	$db = new DataLayer();
+	$fm = new FileManager();
 
 	$rs = $db->getSongForUser($_SESSION['groupID'], $_GET['song']);
 	$row = $rs->fetch_assoc();
@@ -86,6 +88,8 @@
 		} else {
 			echo "<a href='newLyrics.php?song={$song->getSongID()}'> Add Song Lyrics</a>";
 		}
+
+		if(count($recordingArray) > 0) {
 	?>
 	<br /><br />
 	Recordings <br />
@@ -96,28 +100,45 @@
 			<td>Artist</td>
 			<td>Album</td>
 			<td>Date</td>
+			<td></td>
 		</tr>
 	<?
-		foreach($recordingArray as $recording) {
-			$artRS = $db->getArtistForID($recording->getUserID(), $recording->getArtistID());
 
-			$artRow = $artRS->fetch_assoc();
-			$artist = new Artist($artRow);
-
-			$alRS = $db->getAlbumForID($recording->getUserID(), $recording->getAlbumID());
-
-			$alRow = $alRS->fetch_assoc();
-			$album = new Album($alRow);
 	
-			echo "<tr>";
-			echo "<td><a href='editRecording.php?rec={$recording->getRecordingID()}'> EDIT </a></td>";
-			echo "<td><a href='artistDetails.php?art={$artist->getArtistID()}'> {$artist->getName()} </a></td>";
-			echo "<td><a href='albumDetails.php?al={$album->getAlbumID()}'> {$album->getName()} </a></td>";
-			echo "<td>{$recording->getDateRecorded()}</td>";
-			echo "</tr>";
-		} 
+			foreach($recordingArray as $recording) {
+				$artRS = $db->getArtistForID($recording->getUserID(), $recording->getArtistID());
+
+				$artRow = $artRS->fetch_assoc();
+				$artist = new Artist($artRow);
+
+				$alRS = $db->getAlbumForID($recording->getUserID(), $recording->getAlbumID());
+
+				$alRow = $alRS->fetch_assoc();
+				$album = new Album($alRow);
+				
+				$mp3Path = $fm->getURLForRecording($_SESSION['groupID'], $song->getName(), $recording->getRecordingID(), $album->getAlbumID(), $album->getName(), $artist->getArtistID(), $artist->getName());
+
+				if ($mp3Path != '0') {
+					$audio = "<td><audio controls><source src='{$mp3Path}' type='audio/mpeg'>Your browser does not support the audio element.</audio></td>";
+				} else {
+					$audio = "<td></td>";
+				}
+
+				echo "<tr>";
+				echo "<td><a href='editRecording.php?rec={$recording->getRecordingID()}'> EDIT </a></td>";
+				echo "<td><a href='artistDetails.php?art={$artist->getArtistID()}'> {$artist->getName()} </a></td>";
+				echo "<td><a href='albumDetails.php?al={$album->getAlbumID()}'> {$album->getName()} </a></td>";
+				echo "<td>{$recording->getDateRecorded()}</td>";
+				echo $audio;
+				echo "</tr>";
+			} 
+	
 	?>
 	</table>
+
+	<?
+		}
+	?>
 	<br /><br />
 	<a href="newRecording.php?song=<? echo $_GET['song'] ?>"> Add Recording </a><br /><br />
 </body>

@@ -76,6 +76,17 @@ class DataLayer {
 		return;
 	}
 
+	public function updateSongForUser($userID, $songID, $name, $composerID, $month, $day, $year) {
+		$sql = "update songs set name = '{$name}', composer_id = {$composerID}, month_written = {$month}, day_written = {$day}, year_written = {$year} where id = {$songID} and user_id = {$userID}";
+		$rs = $this->db->query($sql);
+
+		if ($rs != null) {
+			return $rs;
+		}
+			
+		return;
+	}
+
 	/***************************
 		Song Lyric functions
 	****************************/

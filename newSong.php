@@ -27,7 +27,7 @@
 
 	// get the composer data
 	$composerArray = array();
-	$compRS = $db->getComposersForUser('1');
+	$compRS = $db->getComposersForUser($_SESSION['groupID']);
 
 	if ($compRS != null) {
 		while($compRow = $compRS->fetch_assoc()) {
