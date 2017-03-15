@@ -71,7 +71,7 @@
 				$songRow = $songRS->fetch_assoc();
 				$song = new Song($songRow);
 
-				echo "{$song->getName()}";
+				echo "<a href='songDetails.php?song={$song->getSongID()}'>{$song->getName()}</a>";
 				echo "<br />";
 			}
 		}

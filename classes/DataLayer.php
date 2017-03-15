@@ -150,6 +150,28 @@ class DataLayer {
 		return;
 	}
 
+	public function createComposerForUser($userID, $composerName) {
+		$sql = "insert into composers (user_id, name) values ({$userID}, '{$composerName}')";
+		$rs = $this->db->query($sql);
+
+		if ($rs != null) {
+			return $rs;
+		}
+			
+		return;
+	}
+
+	public function updateComposerForID($userID, $composerID, $composerName) {
+		$sql = "update composers set name = '{$composerName}' where id = {$composerID} and user_id = {$userID}";
+		$rs = $this->db->query($sql);
+
+		if ($rs != null) {
+			return $rs;
+		}
+			
+		return;
+	}
+
 	/*************************
 		Recordings functions
 	**************************/
