@@ -50,13 +50,6 @@
 	<title> Songbase </title>
 	<link rel="stylesheet" type="text/css" href="styles/songbase.css" />
 	<script src="scripts/jquery.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
- 			$('artistSelect').on('change', function() {
- 				alert('there');
- 			});
-		});
-	</script>
 </head>
 <body>
 	<div>

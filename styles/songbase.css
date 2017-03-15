@@ -1,54 +1,83 @@
-@media only screen and (max-width : 320px)   {
-   #header {
-      display: none;
-   }
-   #menu {
-   		background-color: red;
-   }
-   #main_content {
-      	background-color: green;
-   }
-   #footer {
-      	background-color: blue;
-   }
+body {
+   background-image: url("../images/background.jpg");
+   font-family: Georgia;
+   font-size:1.2em;
+   font-variant: small-caps;
+   color: #FFF;
+   margin:0;
 }
 
-@media only screen and (max-width : 650px) and (min-width : 321px)   {
-   #header {
-      display: none;
-   }
-   #menu {
-   		background-color: black;
-   }
-   #main_content {
-      	background-color: orange;
-   }
-   #footer {
-      	background-color: red;
-   }
+h1 {
+   font-size: 1.4em;
+   text-shadow: 3px 3px #000;
 }
 
-nav { display:block; margin:0 auto 20px; border:1px solid #222; position:relative; background-color:#6a6a6a; font:16px Tahoma, Sans-serif; }
-nav ul { padding:0; margin:0; }
-nav li { position:relative; float:left; list-style-type:none; }
-nav ul:after { content:"."; display:block; height:0; clear:both; visibility:hidden; }
-nav li a { display:block; padding:10px 20px; border-left:1px solid #999; border-right:1px solid #222; color:#eee; text-decoration:none; }
-nav li a:focus { outline:none; text-decoration:underline; }
-nav li:first-child a { border-left:none; }
-nav li.last a { border-right:none; }
-nav a span { display:block; float:right; margin-left:5px; }
-nav ul ul { display:none; width:100%; position:absolute; left:0; background:#6a6a6a; }
-nav ul ul li { float:none; }
-nav ul ul a { padding:5px 10px; border-left:none; border-right:none; font-size:14px; }
-nav ul ul a:hover { background-color:#555; }
+input[type="text"] {
+  padding: 5px;
+  border: solid 1px #000;
+  box-shadow: inset 1px 1px 2px 0 #707070;
+  transition: box-shadow 0.3s;
+}
+input[type="text"]:focus,
+input[type="text"].focus {
+  box-shadow: inset 1px 1px 2px 0 #c9c9c9;
+}
 
-.borderradius nav { -moz-border-radius:4px; -webkit-border-radius:4px; border-radius:4px; }
-.cssgradients nav { background-image:-moz-linear-gradient(0% 22px 90deg, #222, #999); background-image:-webkit-gradient(linear, 0% 0%, 0% 70%, from(#999), to(#222)); }
-.boxshadow.rgba nav { -moz-box-shadow:2px 2px 2px rgba(0,0,0,.75); -webkit-box-shadow:2px 2px 2px rgba(0,0,0,.75); box-shadow:2px 2px 2px rgba(0,0,0,.75); }
-.cssgradients nav li:hover { background-image:-moz-linear-gradient(0% 100px 90deg, #999, #222); background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#222), to(#555)); }
-.borderradius nav ul ul { -moz-border-radius-bottomleft:4px; -moz-border-radius-bottomright:4px; -webkit-border-bottom-left-radius:4px; -webkit-border-bottom-right-radius:4px; border-bottom-left-radius:4px; border-bottom-right-radius:4px; }
-.boxshadow.rgba nav ul ul { background-color:rgba(0,0,0,0.8); -moz-box-shadow:2px 2px 2px rgba(0,0,0,.8); -webkit-box-shadow:2px 2px 2px rgba(0,0,0,.8); box-shadow:2px 2px 2px rgba(0,0,0,.8); }
-.rgba nav ul ul li { border-left:1px solid rgba(0,0,0,0.1); border-right:1px solid rgba(0,0,0,0.1); }
-.rgba nav ul ul a:hover { background-color:rgba(85,85,85,.9); }
-.borderradius.rgba nav ul ul li.last { border-left:1px solid rgba(0,0,0,0.1); border-bottom:1px solid rgba(0,0,0,0.1); -moz-border-radius-bottomleft:4px; -moz-border-radius-bottomright:4px; -webkit-border-bottom-left-radius:4px; -webkit-border-bottom-right-radius:4px; border-bottom-left-radius:4px; border-bottom-right-radius:4px; }
-.csstransforms ul a span { -moz-transform:rotate(-180deg);-webkit-transform:rotate(-180deg); }
+input[type="password"] {
+  padding: 5px;
+  border: solid 1px #000;
+  box-shadow: inset 1px 1px 2px 0 #707070;
+  transition: box-shadow 0.3s;
+}
+
+input[type="password"]:focus,
+input[type="password"].focus {
+  box-shadow: inset 1px 1px 2px 0 #c9c9c9;
+}
+
+.main {
+   width: 95%;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+/* imported button style  */
+.songbaseButton {
+ -webkit-box-shadow:inset 0px 1px 0px 0px #d9d5d5;
+   box-shadow:inset 0px 1px 0px 0px #d9d5d5;
+   background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #9e9898), color-stop(1, #000000));
+   background:-moz-linear-gradient(top, #9e9898 5%, #000000 100%);
+   background:-webkit-linear-gradient(top, #9e9898 5%, #000000 100%);
+   background:-o-linear-gradient(top, #9e9898 5%, #000000 100%);
+   background:-ms-linear-gradient(top, #9e9898 5%, #000000 100%);
+   background:linear-gradient(to bottom, #9e9898 5%, #000000 100%);
+   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#9e9898', endColorstr='#000000',GradientType=0);
+   background-color:#9e9898;
+   -moz-border-radius:6px;
+   -webkit-border-radius:6px;
+   border-radius:6px;
+   border:1px solid #000000;
+   display:inline-block;
+   cursor:pointer;
+   color:#ffffff;
+   font-family:Georgia;
+   font-size:.75em;
+   font-variant: small-caps;
+   padding:8px 39px;
+   text-decoration:none;
+   text-shadow:1px 1px 0px #1f0608;
+}
+.songbaseButton:hover {
+   background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #000000), color-stop(1, #9e9898));
+   background:-moz-linear-gradient(top, #000000 5%, #9e9898 100%);
+   background:-webkit-linear-gradient(top, #000000 5%, #9e9898 100%);
+   background:-o-linear-gradient(top, #000000 5%, #9e9898 100%);
+   background:-ms-linear-gradient(top, #000000 5%, #9e9898 100%);
+   background:linear-gradient(to bottom, #000000 5%, #9e9898 100%);
+   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#9e9898',GradientType=0);
+   background-color:#000000;
+}
+.songbaseButton:active {
+   position:relative;
+   top:1px;
+}

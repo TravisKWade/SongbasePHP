@@ -35,9 +35,13 @@
 <html>
 <head>
 	<title>Songbase</title>
+	<link rel="stylesheet" type="text/css" href="styles/songbase.css" />
+	<link rel="stylesheet" type="text/css" href="styles/login.css" />
+	<link rel="shortcut icon" href="images/favicon.ico">
 </head>
 <body>
-	<div id="new_account_form">
+	<div id="login" class="login">
+		<h1>Log in to Songbase</h1>
 		<form action="login.php" method="post">
 			<? echo $error ?>
 			<table>
@@ -46,11 +50,12 @@
 					<td><input type="text" name="email" /></td>
 				</tr>
 				<tr>
-					<td>password:</td>
+					<td>Password:</td>
 					<td><input type="password" name="password" /></td>
 				</tr>
 			</table>
-			<input type="submit" name="submit" value="Login">
+			<br />
+			<input type="submit" name="submit" value="Login" class="songbaseButton" />
 		</form>
 	</div>
 </body>
