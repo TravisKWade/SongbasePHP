@@ -74,7 +74,13 @@
 	}
 
 	$albumArray = array();
-	$alRS = $db->getAlbumsForUser($_SESSION['groupID']);
+	//$alRS = $db->getAlbumsForUser($_SESSION['groupID']);
+
+	if($_GET['art'] == null) {
+		$alRS = $db->getAlbumsForArtist($recording->getArtistID());
+	} else {
+		$alRS = $db->getAlbumsForArtist($_GET['art']);
+	}
 
 	if ($alRS != null) {
 		while ($alRow = $alRS->fetch_assoc()) {
@@ -88,6 +94,14 @@
 	<title> Songbase </title>
 	<link rel="stylesheet" type="text/css" href="styles/songbase.css" />
 	<script src="scripts/jquery.js"></script>
+	<script src="scripts/songbase.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+ 			$('#artistSelect').on('change', function() {
+ 				window.location.href = "editRecording.php?rec=" + getParameterByName('rec') + "&art=" + $('#artistSelect').val();
+ 			});
+		});
+	</script>
 </head>
 <body>
 	<div>
@@ -112,11 +126,13 @@
 				<tr>
 					<td>Artist:</td>
 					<td>
-						<select name="artist">
+						<select name="artist" id="artistSelect">
 						<?
 							foreach($artistArray as $artist) {
-								if($artist->getArtistID() == $recording->getArtistID()) {
+								if($artist->getArtistID() == $recording->getArtistID() && $_GET['art'] == null) {
 									$recordingArtist = $artist;
+									echo "<option value=\"{$artist->getArtistID()}\" selected>{$artist->getName()}</option>";
+								} else if($_GET['art'] != null && $_GET['art'] == $artist->getArtistID()) {
 									echo "<option value=\"{$artist->getArtistID()}\" selected>{$artist->getName()}</option>";
 								} else {
 									echo "<option value=\"{$artist->getArtistID()}\">{$artist->getName()}</option>";
@@ -158,7 +174,7 @@
 				<tr><td><br /></td></tr>
 
 				<?
-					$recordingFileExists = $fm->checkForExistingRecording($_SESSION['groupID'], $song->getName(), $recording->getRecordingID(), $recordedAlbum->getAlbumID(), $recordedAlbum->getName(), $recordingArtist->getArtistID(), $recordingArtist->getName());
+					//$recordingFileExists = $fm->checkForExistingRecording($_SESSION['groupID'], $song->getName(), $recording->getRecordingID(), $recordedAlbum->getAlbumID(), $recordedAlbum->getName(), $recordingArtist->getArtistID(), $recordingArtist->getName());
 					
 					if($recordingFileExists == 1) {
 				?>

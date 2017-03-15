@@ -67,7 +67,14 @@
 	}
 
 	$albumArray = array();
-	$alRS = $db->getAlbumsForUser($_SESSION['groupID']);
+
+	if ($_GET['art'] == null) {
+		$artist = array_values($artistArray)[0];
+		$alRS = $db->getAlbumsForArtist($artist->getArtistID());
+	} else {
+		$alRS = $db->getAlbumsForArtist($_GET['art']);
+	}
+	//$alRS = $db->getAlbumsForUser($_SESSION['groupID']);
 
 	if ($alRS != null) {
 		while ($alRow = $alRS->fetch_assoc()) {
@@ -81,6 +88,14 @@
 	<title> Songbase </title>
 	<link rel="stylesheet" type="text/css" href="styles/songbase.css" />
 	<script src="scripts/jquery.js"></script>
+	<script src="scripts/songbase.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+ 			$('#artistSelect').on('change', function() {
+ 				window.location.href = "newRecording.php?song=" + getParameterByName('song') + "&art=" + $('#artistSelect').val();
+ 			});
+		});
+	</script>
 </head>
 <body>
 	<div>
@@ -99,16 +114,20 @@
 	</ul>
 	<? echo $error ?>
 	<? echo $song->getName() ?>
-	<div id="new_song_form">
+	<div id="new_form">
 		<form action="newRecording.php?song=<? echo $_GET['song'] ?>" method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
 					<td>Artist:</td>
 					<td>
-						<select name="artist">
+						<select name="artistSelect" id="artistSelect">
 						<?
 							foreach($artistArray as $artist) {
-								echo "<option value=\"{$artist->getArtistID()}\">{$artist->getName()}</option>";
+								if ($_GET['art'] != null && $_GET['art'] == $artist->getArtistID()) {
+									echo "<option value=\"{$artist->getArtistID()}\" selected>{$artist->getName()}</option>";
+								} else {
+									echo "<option value=\"{$artist->getArtistID()}\">{$artist->getName()}</option>";
+								}
 							}
 						?>
 						</select>
