@@ -83,29 +83,43 @@
 <html>
 <head>
 	<title>Songbase</title>
+	<link rel="stylesheet" type="text/css" href="styles/songbase.css" />
+	<link rel="stylesheet" type="text/css" href="styles/header.css" />
+	<link rel="stylesheet" type="text/css" href="styles/menu.css" />
+	<link rel="stylesheet" type="text/css" href="styles/songDetails.css" />
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<script src="scripts/jquery.js"></script>
 </head>
 <body>
-	<div>
-		Songbase - EDIT SONG
+	<div class="header">
+		<div class="title">Songbase - Edit Song</div>
+		<div class="logout">
+			<form action="logout.php">
+				<? echo $_SESSION['user']; ?>&nbsp;&nbsp;&nbsp;
+				<input type="submit" value="Log Out" class="logoutButton"/>
+			</form>
+		</div>
 	</div>
-
-	User: <? echo $_SESSION['user']; ?>
-	<form action="logout.php">
-		<input type="submit" value="Logout" />
-	</form>
-	<ul>
-		<li><a href="songs.php">Songs</a></li>
-		<li><a href="artists.php">Artists</a></li>
-		<li><a href="albums.php">Albums</a></li>
-		<li><a href="composers.php">Composers</a></li>
-	</ul>
-	<? echo $error;?>
-	<div id="new_song_form">
+	<div class="menu">
+		<ul>
+			<li><a href="songs.php">Songs</a></li>
+			<li><a href="artists.php">Artists</a></li>
+			<li><a href="albums.php">Albums</a></li>
+			<li><a href="composers.php">Composers</a></li>
+		</ul>
+	</div>
+	<div class="songTitle">
+		<? echo $song->getName() ?>
+	</div>
+	<div class="error">
+		<? echo $error;?>
+	</div>
+	<div class="songDetails">
 		<form action="editSong.php?song=<? echo $song->getSongID() ?>" method="post">
 			<table>
 				<tr>
 					<td>Song Name:</td>
-					<td><input type="text" name="name" value="<? echo $song->getName() ?>" /></td>
+					<td><input type="text" name="name" value="<? echo $song->getName() ?>" style="width:250px" /></td>
 				</tr>
 				<tr>
 					<td>Composer:</td>
@@ -125,18 +139,20 @@
 				</tr>
 				<tr>
 					<td>Month Written:</td>
-					<td><input type="text" name="month" value="<? echo $song->getMonthWritten() ?>" /></td>
+					<td><input type="text" name="month" value="<? echo $song->getMonthWritten() ?>" style="width:250px" /></td>
 				</tr>
 				<tr>
 					<td>Day Written:</td>
-					<td><input type="text" name="day" value="<? echo $song->getDayWritten() ?>" /></td>
+					<td><input type="text" name="day" value="<? echo $song->getDayWritten() ?>" style="width:250px" /></td>
 				</tr>
 				<tr>
 					<td>Year Written</td>
-					<td><input type="text" name="year" value="<? echo $song->getYearWritten() ?>" /></td>
+					<td><input type="text" name="year" value="<? echo $song->getYearWritten() ?>" style="width:250px" /></td>
 				</tr>
 			</table>
-			<input type="submit" name="submit" value="Update Song">
+			<div class="submitSong">
+				<input type="submit" name="submit" value="Update Song" class="songbaseButton">
+			</div>
 		</form>
 	</div>
 </body>

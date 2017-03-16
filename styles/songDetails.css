@@ -27,8 +27,14 @@
 	text-align: center;
 }
 
-.recordingDetails table tr {
-	border-bottom: 1px solid #000;
+.recordingDetailsRow td {
+	border-bottom: 1px solid #fff;
+}
+
+.recordingDetailsCell a {
+	text-decoration: none;
+	color: #fff;
+	text-shadow: 1px 1px #000;
 }
 
 .songLyrics {
@@ -41,9 +47,15 @@ h2 {
    	border-bottom: 1px solid #000;
 }
 
+.songDetailHeader {
+	text-shadow: 3px 3px #000;
+	font-weight: bold;
+}
+
 .tableHeader {
 	text-shadow: 3px 3px #000;
 	font-weight: bold;
+	padding-bottom: 10px;
 }
 
 .tableDetail {
@@ -69,7 +81,24 @@ h2 {
 
 .editButton {
 	background: url(../images/edit.png) no-repeat 6px center;
-	width: 40px;
-	height: 40px;
+	padding:5px;
+	margin-top: 10px;
+	width: 45px;
+	height: 45px;
 	border: none;
 }
+
+.songForm {
+	text-align: center;
+}
+
+.songForm table {
+	width:60%;
+	text-align: right;
+}
+
+.submitSong {
+	margin-top: 40px;
+	text-align: center;
+}
+

@@ -51,34 +51,44 @@
 	<title> Songbase </title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="styles/songbase.css" />
+	<link rel="stylesheet" type="text/css" href="styles/header.css" />
+	<link rel="stylesheet" type="text/css" href="styles/menu.css" />
+	<link rel="stylesheet" type="text/css" href="styles/lyrics.css" />
+	<link rel="shortcut icon" href="images/favicon.ico">
 	<script src="scripts/jquery.js"></script>
 </head>
 <body>
-	<div>
-		Songbase - EDIT SONG LYRICS
+	<div class="header">
+		<div class="title">Songbase - Edit Lyrics</div>
+		<div class="logout">
+			<form action="logout.php">
+				<? echo $_SESSION['user']; ?>&nbsp;&nbsp;&nbsp;
+				<input type="submit" value="Log Out" class="logoutButton"/>
+			</form>
+		</div>
+	</div>
+	<div class="menu">
+		<ul>
+			<li><a href="songs.php">Songs</a></li>
+			<li><a href="artists.php">Artists</a></li>
+			<li><a href="albums.php">Albums</a></li>
+			<li><a href="composers.php">Composers</a></li>
+		</ul>
 	</div>
 
-	User: <? echo $_SESSION['user']; ?>
-	<form action="logout.php">
-		<input type="submit" value="Logout" />
-	</form>
-	<ul>
-		<li><a href="songs.php">Songs</a></li>
-		<li><a href="artists.php">Artists</a></li>
-		<li><a href="albums.php">Albums</a></li>
-		<li><a href="composers.php">Composers</a></li>
-	</ul>
-
-	<? echo $song->getName() ?>
-	<br /><br />
-	<? echo $error;?>
-	<br />
-	Song Lyrics:
-	<div id="new_lyrics_form">
+	<div class="songTitle">
+		<? echo $song->getName() ?>
+	</div>
+	<div class="error">
+		<? echo $error;?>
+	</div>
+	<div class="lyricsBox">
+		Song Lyrics: <br /><br />
 		<form action="editLyrics.php?song=<? echo $song->getSongID() ?>&from=<? echo $_SERVER['HTTP_REFERER'] ?>" method="post">
 			<textarea name="lyrics" rows="30" cols="80"><? echo $lyric ?></textarea>
-			<br /><br />
-			<input type="submit" name="submit" value="Update Lyrics">
+			<div class="submitLyrics">
+				<input type="submit" name="submit" value="Update Lyrics" class="songbaseButton">
+			</div>
 		</form>
 	</div>
 	

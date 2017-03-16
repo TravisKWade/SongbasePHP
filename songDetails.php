@@ -81,12 +81,12 @@
 		<h2>Song Details</h2>
 		<table>
 			<tr>
-				<td class="tableHeader">Composer:</td>
-				<td class="tableDetails"><? echo $composer->getName() ?></td>
+				<td class="songDetailHeader">Composer:</td>
+				<td><? echo $composer->getName() ?></td>
 			</tr>
 			<tr>
-				<td class="tableHeader">Date Written:</td>
-				<td class="tableDetails"><? echo $song->getDateWritten() ?></td>
+				<td class="songDetailHeader">Date Written:</td>
+				<td><? echo $song->getDateWritten() ?></td>
 			</tr>
 		</table>
 	</div>
@@ -115,7 +115,7 @@
 		<h2>Recordings </h2>
 
 		<table>
-			<tr>
+			<tr class="recordingDetailsRow">
 				<td></td>
 				<td class="tableHeader">Artist</td>
 				<td class="tableHeader">Album</td>
@@ -144,14 +144,14 @@
 					$audio = "<td></td>";
 				}
 
-				echo "<tr>";
+				echo "<tr class='recordingDetailsRow'>";
 				echo "<td>";
 				echo "<form action='editRecording.php'>";
 				echo "<input type='hidden' name='rec' value='{$song->getSongID()}' />";
 				echo "<input type='submit' value='' class='editButton' /></form>";
 				echo "</td>";
-				echo "<td><a href='artistDetails.php?art={$artist->getArtistID()}'> {$artist->getName()} </a></td>";
-				echo "<td><a href='albumDetails.php?al={$album->getAlbumID()}'> {$album->getName()} </a></td>";
+				echo "<td class='recordingDetailsCell'><a href='artistDetails.php?art={$artist->getArtistID()}'> {$artist->getName()} </a></td>";
+				echo "<td class='recordingDetailsCell'><a href='albumDetails.php?al={$album->getAlbumID()}'> {$album->getName()} </a></td>";
 				echo "<td>{$recording->getDateRecorded()}</td>";
 				echo $audio;
 				echo "</tr>";
