@@ -1,0 +1,43 @@
+.editButton {
+  background: url(../images/edit.png) no-repeat 6px center;
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+
+.newSong {
+	padding: 20px;
+}
+
+.songList {
+	padding: 20px;
+}
+
+.letterBreak {
+	padding-left: 20px;
+	border-top: 1px solid #000;
+}
+
+.songList a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 10px 10px;
+    text-decoration: none;
+    font-size: 1.1em;
+}
+
+.shortcut {
+	background: #323131;
+	border-top: 4px solid #000;
+	border-bottom: 4px solid #000;
+	text-align: center;
+}
+
+.shortcut a {
+    color: white;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 1.2em;
+    text-shadow: 1px 1px #9b0d04;
+}

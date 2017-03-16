@@ -1,0 +1,75 @@
+.songTitle {
+	padding: 20px;
+	font-size: 1.6em;
+   	text-shadow: 3px 3px #000;
+   	text-align: center;
+}
+
+.songDetails {
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.songDetails table {
+	text-align: right;
+	width: 80%;
+}
+
+.recordingDetails {
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.recordingDetails table {
+	width: 100%;
+	text-align: center;
+}
+
+.recordingDetails table tr {
+	border-bottom: 1px solid #000;
+}
+
+.songLyrics {
+	float:left;
+}
+
+h2 {
+	font-size: 1.2em;
+   	text-shadow: 3px 3px #000;
+   	border-bottom: 1px solid #000;
+}
+
+.tableHeader {
+	text-shadow: 3px 3px #000;
+	font-weight: bold;
+}
+
+.tableDetail {
+	font-weight: normal;
+}
+
+.editSong {
+	float: right;
+}
+
+.newRecording {
+	margin-top: 40px;
+	text-align: center;
+}
+
+.options {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 60px;
+	margin-bottom: 140px;
+	width:50%;
+}
+
+.editButton {
+	background: url(../images/edit.png) no-repeat 6px center;
+	width: 40px;
+	height: 40px;
+	border: none;
+}
