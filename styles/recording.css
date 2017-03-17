@@ -13,9 +13,16 @@
 
 .recordingContent table {
 	text-align: right;
-	width: 50%;
+	width: 100%%;
+	margin-right: auto;
+	margin-left: auto;
 }
 
 .recordingContent table input[type="text"] {
 	width: 100px;
+}
+
+.recordingSubmit {
+	text-align: center;
+	margin-top: 20px;
 }

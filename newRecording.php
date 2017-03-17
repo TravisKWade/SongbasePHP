@@ -87,34 +87,37 @@
 <head>
 	<title> Songbase </title>
 	<link rel="stylesheet" type="text/css" href="styles/songbase.css" />
+	<link rel="stylesheet" type="text/css" href="styles/header.css" />
+	<link rel="stylesheet" type="text/css" href="styles/menu.css" />
+	<link rel="stylesheet" type="text/css" href="styles/recording.css" />
+	<link rel="shortcut icon" href="images/favicon.ico">
 	<script src="scripts/jquery.js"></script>
-	<script src="scripts/songbase.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
- 			$('#artistSelect').on('change', function() {
- 				window.location.href = "newRecording.php?song=" + getParameterByName('song') + "&art=" + $('#artistSelect').val();
- 			});
-		});
-	</script>
 </head>
 <body>
-	<div>
-		Songbase - NEW RECORDING
+	<div class="header">
+		<div class="title">Songbase - New Recording</div>
+		<div class="logout">
+			<form action="logout.php">
+				<? echo $_SESSION['user']; ?>&nbsp;&nbsp;&nbsp;
+				<input type="submit" value="Log Out" class="logoutButton"/>
+			</form>
+		</div>
 	</div>
-
-	User: <? echo $_SESSION['user']; ?>
-	<form action="logout.php">
-		<input type="submit" value="Logout" />
-	</form>
-	<ul>
-		<li><a href="songs.php">Songs</a></li>
-		<li><a href="artists.php">Artists</a></li>
-		<li><a href="albums.php">Albums</a></li>
-		<li><a href="composers.php">Composers</a></li>
-	</ul>
-	<? echo $error ?>
-	<? echo $song->getName() ?>
-	<div id="new_form">
+	<div class="menu">
+		<ul>
+			<li><a href="songs.php">Songs</a></li>
+			<li><a href="artists.php">Artists</a></li>
+			<li><a href="albums.php">Albums</a></li>
+			<li><a href="composers.php">Composers</a></li>
+		</ul>
+	</div>
+	<div class="error">
+		<? echo $error ?>
+	</div>
+	<div class="recordingContent">
+		<div class="songTitle">
+			<? echo $song->getName() ?>
+		</div>
 		<form action="newRecording.php?song=<? echo $_GET['song'] ?>" method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
@@ -163,11 +166,10 @@
 					<td><input type="file" name="file" id="file" /></td>
 				</tr>
 			</table>
-			<input type="submit" name="submit" value="Add New Recording">
+			<div class="recordingSubmit">
+				<input type="submit" name="submit" value="Add New Recording" class="songbaseButton">
+			</div>
 		</form>
 	</div>
-
-	<a href="newAlbum.php">New Album</a> <br /><br />
-	<a href="newArtist.php">New Artist</a>
 </body>
 </html>

@@ -193,7 +193,9 @@
 					}
 				?>
 			</table>
-			<input type="submit" name="submit" value="Update Recording">
+			<div class="recordingSubmit">
+				<input type="submit" name="submit" value="Update Recording" class="songbaseButton">
+			</div>
 		</form>
 	</div>
 </body>
