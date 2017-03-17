@@ -73,50 +73,67 @@
 <head>
 	<title> Songbase </title>
 	<link rel="stylesheet" type="text/css" href="styles/songbase.css" />
+	<link rel="stylesheet" type="text/css" href="styles/header.css" />
+	<link rel="stylesheet" type="text/css" href="styles/menu.css" />
+	<link rel="stylesheet" type="text/css" href="styles/album.css" />
+	<link rel="shortcut icon" href="images/favicon.ico">
 	<script src="scripts/jquery.js"></script>
 </head>
 <body>
-	<div>
-		Songbase - EDIT ALBUM SONG ORDER
+	<div class="header">
+		<div class="title">Songbase - Edit Album</div>
+		<div class="logout">
+			<form action="logout.php">
+				<? echo $_SESSION['user']; ?>&nbsp;&nbsp;&nbsp;
+				<input type="submit" value="Log Out" class="logoutButton"/>
+			</form>
+		</div>
+	</div>
+	<div class="menu">
+		<ul>
+			<li><a href="songs.php">Songs</a></li>
+			<li><a href="artists.php">Artists</a></li>
+			<li><a href="albums.php">Albums</a></li>
+			<li><a href="composers.php">Composers</a></li>
+		</ul>
 	</div>
 
-	User: <? echo $_SESSION['user']; ?>
-	<form action="logout.php">
-		<input type="submit" value="Logout" />
-	</form>
-	<div>
-		Songbase
+	<div class="albumTitle">
+		<? echo $album->getName() ?>
 	</div>
-	<ul>
-		<li><a href="songs.php">Songs</a></li>
-		<li><a href="artists.php">Artists</a></li>
-		<li><a href="albums.php">Albums</a></li>
-		<li><a href="composers.php">Composers</a></li>
-	</ul>
+	<div class="artistTitle">
+		<? echo $artist->getName() ?>
+	</div>
+	<div class="albumReleaseDate">
+		<? echo $album->getYearReleased() ?>
+	</div>
 
-	<? echo $album->getName() ?><br />
-	<? echo $artist->getName() ?><br />
-	<? echo $album->getYearReleased() ?>
-	<br /><br />
-	Album Songs
-	<br />
-	<?
-		$count = 1;
-		foreach($recordingArray as $recording) {
-			$songRS = $db->getSongForUser($_SESSION['userID'], $recording->getSongID());
-			$songRow = $songRS->fetch_assoc();
-			$song = new Song($songRow);
-	?>
-	<form action="editAlbumSongOrder.php?al=<? echo $album->getAlbumID() ?>&rec=<? echo $recording->getRecordingID() ?>&count=<? echo $count ?>" method="post">
-		<? echo $count ?>.
-		<input type="submit" name="up" value="Up">
-		<input type="submit" name="down" value="Down">
-		<? echo $song->getName() ?>
-	</form>
-	<?
-			$count = $count + 1;
-		}
-	?>
-
+	<div class="albumContent">
+		<h2>Album Songs</h2>
+	
+		<?
+			$count = 1;
+			foreach($recordingArray as $recording) {
+				$songRS = $db->getSongForUser($_SESSION['userID'], $recording->getSongID());
+				$songRow = $songRS->fetch_assoc();
+				$song = new Song($songRow);
+		?>
+		<form action="editAlbumSongOrder.php?al=<? echo $album->getAlbumID() ?>&rec=<? echo $recording->getRecordingID() ?>&count=<? echo $count ?>" method="post">
+			<? 
+				if ($count < 10) {
+					echo "&nbsp;&nbsp;{$count}";
+				} else {
+					echo $count;
+				} 
+			?>.
+			<input type="submit" name="up" value="Up" class="upButton">
+			<input type="submit" name="down" value="Down" class="downButton">
+			<? echo $song->getName() ?>
+		</form>
+		<?
+				$count = $count + 1;
+			}
+		?>
+	</div>
 </body>
 </html>

@@ -1,0 +1,21 @@
+.songTitle {
+	padding: 20px;
+	font-size: 1.6em;
+   	text-shadow: 3px 3px #000;
+   	text-align: center;
+}
+
+.recordingContent {
+	width: 60%;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.recordingContent table {
+	text-align: right;
+	width: 50%;
+}
+
+.recordingContent table input[type="text"] {
+	width: 100px;
+}

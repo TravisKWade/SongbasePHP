@@ -34,55 +34,74 @@
 <head>
 	<title> Songbase </title>
 	<link rel="stylesheet" type="text/css" href="styles/songbase.css" />
+	<link rel="stylesheet" type="text/css" href="styles/header.css" />
+	<link rel="stylesheet" type="text/css" href="styles/menu.css" />
+	<link rel="stylesheet" type="text/css" href="styles/album.css" />
+	<link rel="shortcut icon" href="images/favicon.ico">
 	<script src="scripts/jquery.js"></script>
 </head>
 <body>
-	<div>
-		Songbase - ALBUM DETAILS
+	<div class="header">
+		<div class="title">Songbase - Albums</div>
+		<div class="logout">
+			<form action="logout.php">
+				<? echo $_SESSION['user']; ?>&nbsp;&nbsp;&nbsp;
+				<input type="submit" value="Log Out" class="logoutButton"/>
+			</form>
+		</div>
+	</div>
+	<div class="menu">
+		<ul>
+			<li><a href="songs.php">Songs</a></li>
+			<li><a href="artists.php">Artists</a></li>
+			<li><a href="albums.php">Albums</a></li>
+			<li><a href="composers.php">Composers</a></li>
+		</ul>
+	</div>
+	
+	<div class="albumTitle">
+		<? echo $album->getName() ?>
+	</div>
+	<div class="artistTitle">
+		<? echo $artist->getName() ?>
+	</div>
+	<div class="albumReleaseDate">
+		<? echo $album->getYearReleased() ?>
 	</div>
 
-	User: <? echo $_SESSION['user']; ?>
-	<form action="logout.php">
-		<input type="submit" value="Logout" />
-	</form>
-	<div>
-		Songbase
-	</div>
-	<ul>
-		<li><a href="songs.php">Songs</a></li>
-		<li><a href="artists.php">Artists</a></li>
-		<li><a href="albums.php">Albums</a></li>
-		<li><a href="composers.php">Composers</a></li>
-	</ul>
+	<div class="albumContent">
+		<h2>Album Songs</h2>
+		<?
+			if ($albumRecordingsRS != null) {
+				while($albumRecordingRow = $albumRecordingsRS->fetch_assoc()) {
+					$recording = new Recording($albumRecordingRow);
 
-	<? echo $album->getName() ?><br />
-	<? echo $artist->getName() ?><br />
-	<? echo $album->getYearReleased() ?>
-	<br /><br />
-	Album Songs
-	<br />
-	<?
+					$songRS = $db->getSongForUser($_SESSION['userID'], $recording->getSongID());
+					$songRow = $songRS->fetch_assoc();
+					$song = new Song($songRow);
 
-		if ($albumRecordingsRS != null) {
-			while($albumRecordingRow = $albumRecordingsRS->fetch_assoc()) {
-				$recording = new Recording($albumRecordingRow);
-
-				$songRS = $db->getSongForUser($_SESSION['userID'], $recording->getSongID());
-				$songRow = $songRS->fetch_assoc();
-				$song = new Song($songRow);
-
-				echo "<a href='songDetails.php?song={$song->getSongID()}'>{$song->getName()}</a>";
-				echo "<br />";
+					echo "<a href='songDetails.php?song={$song->getSongID()}'>{$song->getName()}</a>";
+					echo "<br />";
+				}
 			}
-		}
 
-		echo $orderError;
-	?>
-	<br /><br />
-	<a href="editAlbum.php?al=<? echo $_GET['al'] ?>">edit album</a> <br />
-	<a href="editAlbumSongOrder.php?al=<? echo $_GET['al'] ?>">edit album song order</a><br />
-	** to edit the songs on the album, edit the recordings<br /><br />
-
-	<a href="newAlbum.php">New Album</a> <br /><br />
+			echo "<div class='notes'>{$orderError}</div>";
+		?>
+	</div>
+	<div class="options">
+		<div class="editAlbum">
+			<form action="editAlbum.php">
+				<input type="hidden" name="al" value="<? echo $_GET['al'] ?>" />
+		    	<input type="submit" value="Edit Album" class="songbaseButton" />
+			</form>
+		</div>
+		<div class="editAlbumOrder">
+			<form action="editAlbumSongOrder.php">
+				<input type="hidden" name="al" value="<? echo $_GET['al'] ?>" />
+		    	<input type="submit" value="Edit Album Song Order" class="songbaseButton" />
+			</form>
+		</div>
+	</div>
+	<div class="notes">** to edit the songs on the album, edit the recordings</div>
 </body>
 </html>

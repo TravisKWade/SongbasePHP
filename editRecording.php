@@ -74,7 +74,6 @@
 	}
 
 	$albumArray = array();
-	//$alRS = $db->getAlbumsForUser($_SESSION['groupID']);
 
 	if($_GET['art'] == null) {
 		$alRS = $db->getAlbumsForArtist($recording->getArtistID());
@@ -93,34 +92,37 @@
 <head>
 	<title> Songbase </title>
 	<link rel="stylesheet" type="text/css" href="styles/songbase.css" />
+	<link rel="stylesheet" type="text/css" href="styles/header.css" />
+	<link rel="stylesheet" type="text/css" href="styles/menu.css" />
+	<link rel="stylesheet" type="text/css" href="styles/recording.css" />
+	<link rel="shortcut icon" href="images/favicon.ico">
 	<script src="scripts/jquery.js"></script>
-	<script src="scripts/songbase.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
- 			$('#artistSelect').on('change', function() {
- 				window.location.href = "editRecording.php?rec=" + getParameterByName('rec') + "&art=" + $('#artistSelect').val();
- 			});
-		});
-	</script>
 </head>
 <body>
-	<div>
-		Songbase - EDIT RECORDING
+	<div class="header">
+		<div class="title">Songbase - Edit Recording</div>
+		<div class="logout">
+			<form action="logout.php">
+				<? echo $_SESSION['user']; ?>&nbsp;&nbsp;&nbsp;
+				<input type="submit" value="Log Out" class="logoutButton"/>
+			</form>
+		</div>
 	</div>
-
-	User: <? echo $_SESSION['user']; ?>
-	<form action="logout.php">
-		<input type="submit" value="Logout" />
-	</form>
-	<ul>
-		<li><a href="songs.php">Songs</a></li>
-		<li><a href="artists.php">Artists</a></li>
-		<li><a href="albums.php">Albums</a></li>
-		<li><a href="composers.php">Composers</a></li>
-	</ul>
-	<? echo $error ?>
-	<? echo $song->getName() ?>
-	<div id="new_song_form">
+	<div class="menu">
+		<ul>
+			<li><a href="songs.php">Songs</a></li>
+			<li><a href="artists.php">Artists</a></li>
+			<li><a href="albums.php">Albums</a></li>
+			<li><a href="composers.php">Composers</a></li>
+		</ul>
+	</div>
+	<div class="error">
+		<? echo $error ?>
+	</div>
+	<div class="recordingContent">
+		<div class="songTitle">
+			<? echo $song->getName() ?>
+		</div>
 		<form action="editRecording.php?rec=<? echo $_GET['rec'] ?>" method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
@@ -174,8 +176,6 @@
 				<tr><td><br /></td></tr>
 
 				<?
-					//$recordingFileExists = $fm->checkForExistingRecording($_SESSION['groupID'], $song->getName(), $recording->getRecordingID(), $recordedAlbum->getAlbumID(), $recordedAlbum->getName(), $recordingArtist->getArtistID(), $recordingArtist->getName());
-					
 					if($recordingFileExists == 1) {
 				?>
 				<tr>

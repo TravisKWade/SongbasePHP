@@ -1,0 +1,99 @@
+.albumContent {
+	width:40%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.albumContent a {
+	text-align: center;
+	color: #fff;
+	text-shadow: 1px 1px #000;
+	text-decoration: none;
+	padding:15px;
+}
+
+.submitAlbum {
+	padding-top:20px;
+	text-align: center;
+}
+
+.albumTitle {
+	padding-top: 20px;
+	font-size: 1.6em;
+   	text-shadow: 3px 3px #000;
+   	text-align: center;
+}
+
+.artistTitle {
+	font-size: 1.1em;
+   	text-shadow: 1px 1px #000;
+   	text-align: center;
+}
+
+.albumReleaseDate {
+	padding-bottom: 20px;
+	font-size: .8em;
+   	text-align: center;
+}
+
+.notes {
+  	color: #000;
+  	padding:10px;
+  	text-align: center;
+}
+
+.newAlbum {
+	text-align: center;
+	padding-top: 40px;
+}
+
+h2 {
+	font-size: 1.2em;
+   	text-shadow: 3px 3px #000;
+   	border-bottom: 1px solid #000;
+}
+
+.options {
+	width:40%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 50px;
+}
+
+.editAlbum {
+	float: right;
+}
+
+.editAlbumOrder {
+	float:left;
+}
+
+input[type="text"] {
+	width:200px;
+}
+
+.artistContent table {
+	width:100%;
+}
+
+.upButton {
+	background: url(../images/up.png) no-repeat 6px center;
+	padding:5px;
+	width: 35px;
+	height: 20px;
+	border: none;
+	color:#9b0d04;
+}
+
+.downButton {
+	background: url(../images/down.png) no-repeat 6px center;
+	padding:5px;
+	width: 35px;
+	height: 20px;
+	border: none;
+	color:#9b0d04;
+}
+
+.albumContent form {
+	margin-left:20px;
+}

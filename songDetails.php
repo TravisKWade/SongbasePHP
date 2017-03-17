@@ -147,7 +147,7 @@
 				echo "<tr class='recordingDetailsRow'>";
 				echo "<td>";
 				echo "<form action='editRecording.php'>";
-				echo "<input type='hidden' name='rec' value='{$song->getSongID()}' />";
+				echo "<input type='hidden' name='rec' value='{$recording->getRecordingID()}' />";
 				echo "<input type='submit' value='' class='editButton' /></form>";
 				echo "</td>";
 				echo "<td class='recordingDetailsCell'><a href='artistDetails.php?art={$artist->getArtistID()}'> {$artist->getName()} </a></td>";

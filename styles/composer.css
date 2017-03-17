@@ -1,0 +1,42 @@
+.composerContent {
+	width:70%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.newComposer {
+	padding-top: 20px;
+	text-align: center;
+}
+
+h2 {
+	font-size: 1.2em;
+   	text-shadow: 3px 3px #000;
+   	border-bottom: 1px solid #000;
+}
+
+.editButton {
+	background: url(../images/edit.png) no-repeat 6px center;
+	padding:5px;
+	width: 45px;
+	height: 45px;
+	border: none;
+}
+
+.editComposer {
+	margin-left: 20px;
+}
+
+.submitComposer {
+	margin-top:20px;
+	text-align: center;
+}
+
+.composerContent table {
+	width: 80%;
+	text-align: right;
+}
+
+.composerContent input[type="text"] {
+	width: 300px;
+}

@@ -40,29 +40,34 @@
 <head>
 	<title> Songbase </title>
 	<link rel="stylesheet" type="text/css" href="styles/songbase.css" />
+	<link rel="stylesheet" type="text/css" href="styles/header.css" />
+	<link rel="stylesheet" type="text/css" href="styles/menu.css" />
+	<link rel="stylesheet" type="text/css" href="styles/artist.css" />
+	<link rel="shortcut icon" href="images/favicon.ico">
 	<script src="scripts/jquery.js"></script>
 </head>
 <body>
-	<div>
-		Songbase - EDIT ARTIST
+	<div class="header">
+		<div class="title">Songbase - Edit Artist</div>
+		<div class="logout">
+			<form action="logout.php">
+				<? echo $_SESSION['user']; ?>&nbsp;&nbsp;&nbsp;
+				<input type="submit" value="Log Out" class="logoutButton"/>
+			</form>
+		</div>
 	</div>
-
-	User: <? echo $_SESSION['user']; ?>
-	<form action="logout.php">
-		<input type="submit" value="Logout" />
-	</form>
-	<div>
-		Songbase
+	<div class="menu">
+		<ul>
+			<li><a href="songs.php">Songs</a></li>
+			<li><a href="artists.php">Artists</a></li>
+			<li><a href="albums.php">Albums</a></li>
+			<li><a href="composers.php">Composers</a></li>
+		</ul>
 	</div>
-	<ul>
-		<li><a href="songs.php">Songs</a></li>
-		<li><a href="artists.php">Artists</a></li>
-		<li><a href="albums.php">Albums</a></li>
-		<li><a href="composers.php">Composers</a></li>
-	</ul>
-	<br /><br />
-	<? echo $error;?>
-	<div id="edit_artist_form">
+	<div class="error">
+		<? echo $error;?>
+	</div>
+	<div class="artistContent">
 		<form action="editArtist.php?art=<? echo $artist->getArtistID() ?>" method="post">
 			<table>
 				<tr>
@@ -72,7 +77,9 @@
 					</td>
 				</tr>
 			</table>
-			<input type="submit" name="submit" value="Update Artist">
+			<div class="newArtist">
+				<input type="submit" name="submit" value="Update Artist" class="songbaseButton">
+			</div>
 		</form>
 	</div>
 
