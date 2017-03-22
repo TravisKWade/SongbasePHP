@@ -24,6 +24,11 @@
 					$artist = new Artist($artRow);
 					
 					$fm->createFolderForAlbum($_SESSION['groupID'], $artist->getArtistID(), $artist->getName(), $rs, $_POST['name']);
+
+					if (!empty($_POST['file'])) {
+						$fm->uploadImageForAlbum($_SESSION['groupID'], $artist->getArtistID(), $artist->getName(), $rs, $_POST['name'], $_POST['file']);
+					}
+
 					header("location:" . $_GET['from']);
 				} else {
 					$error = "Folder not created.";
@@ -81,7 +86,7 @@
 	</div>
 	<div class="albumContent">
 		<h2>Album Info</h2>
-		<form action="newAlbum.php?from=<? echo $_SERVER['HTTP_REFERER'] ?>" method="post">
+		<form action="newAlbum.php?from=<? echo $_SERVER['HTTP_REFERER'] ?>" method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
 					<td>Artist:</td>
@@ -100,8 +105,12 @@
 					<td><input type="text" name="name" /></td>
 				</tr>
 				<tr>
-					<td>Year Released</td>
+					<td>Year Released:</td>
 					<td><input type="text" name="year" /></td>
+				</tr>
+				<tr>
+					<td>Upload Album Cover:</td>
+					<td><input type="file" name="file" id="file" /></td>
 				</tr>
 			</table>
 			<div class="submitAlbum">

@@ -45,7 +45,7 @@ input[type="password"].focus {
 .error {
   color: #000;
   padding:10px;
-  text-shadow: 3px 3px #c9c9c9;
+  text-shadow: 1px 1px #c9c9c9;
 }
 
 /* imported button style  */

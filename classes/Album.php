@@ -19,6 +19,18 @@
 		}
 
 		/********************
+			Print
+		*********************/
+		public function __toString() {
+			$string = "Album ID: ".$this->albumID."<br />";
+			$string = $string."Album Name: ".$this->name."<br />";
+			$string = $string."Artist ID: ".$this->artistID."<br />";
+			$string = $string."Year Released: ".$this->yearReleased."<br />";
+
+			return $string;
+		}
+
+		/********************
 			Setters
 		*********************/
 		public function setAlbumID($id) {

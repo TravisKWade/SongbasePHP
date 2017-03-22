@@ -2,6 +2,7 @@
 	ob_start();
 	session_start();
 	include("classes/DataLayer.php");
+	include("classes/FileManager.php");
 	include("classes/Song.php");
 	include("classes/Composer.php");
 	include("classes/Recording.php");
@@ -13,6 +14,7 @@
 	} 
 
 	$db = new DataLayer();
+	$fm = new FileManager();
 	$orderError = "";
 
 	$albumRS = $db->getAlbumForID($_SESSION['groupID'], $_GET['al']);
@@ -69,6 +71,17 @@
 		<? echo $album->getYearReleased() ?>
 	</div>
 
+	<?
+		$imagePath = $fm->getImagePathForAlbum($_SESSION['groupID'], $artist->getArtistID(), $artist->getName(), $album->getAlbumID(), $album->getName());
+
+		if ($imagePath != "0") {
+	?>
+			<div class="albumCover">
+				<img src="<? echo $imagePath ?>" height="200" width="200" />
+			</div>
+	<?
+		} 
+	?>
 	<div class="albumContent">
 		<h2>Album Songs</h2>
 		<?

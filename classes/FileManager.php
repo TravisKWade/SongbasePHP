@@ -39,6 +39,10 @@ class FileManager {
 		return $this->getAlbumPath($userID, $artistID, $artistName, $albumID, $albumName) . "/" . str_replace(" ", "_", $songName)."_".$recordingID.".mp3";
 	}
 
+	public function getAlbumImagePath ($userID, $artistID, $artistName, $albumID, $albumName) {
+		return $this->getAlbumPath($userID, $artistID, $artistName, $albumID, $albumName)."/cover.png";
+	}
+
    	/********************
 		Artist
 	*********************/
@@ -88,6 +92,48 @@ class FileManager {
 		} else {
 			rename($oldPath, $newPath);
 		}
+	}
+
+	/********************
+		Album Image
+	*********************/
+
+	public function getImagePathForAlbum($userID, $artistID, $artistName, $albumID, $albumName) {
+		$imagePath = $this->getAlbumImagePath($userID, $artistID, $artistName, $albumID, $albumName);
+		
+		if(!file_exists($imagePath)) {
+			return "0";
+		} else {
+			return $imagePath;
+		}
+	}
+
+	public function uploadImageForAlbum($userID, $artistID, $artistName, $albumID, $albumName, $file) {
+		$imagePath = $this->getAlbumImagePath($userID, $artistID, $artistName, $albumID, $albumName);
+
+		if (file_exists($imagePath)) {
+			return 0;
+		}
+
+		move_uploaded_file($file, $imagePath);
+
+		if ($_FILES['file']['error'] === UPLOAD_ERR_OK) { 
+			return "1";
+		} else { 
+			echo $_FILES['file']['error'];
+			$phpFileUploadErrors = array(
+			    0 => 'There is no error, the file uploaded with success',
+			    1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
+			    2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
+			    3 => 'The uploaded file was only partially uploaded',
+			    4 => 'No file was uploaded',
+			    6 => 'Missing a temporary folder',
+			    7 => 'Failed to write file to disk.',
+			    8 => 'A PHP extension stopped the file upload.',
+			);
+			echo $phpFileUploadErrors[$_FILES['file']['error']]; 
+		}
+	
 	}
 
 	/********************

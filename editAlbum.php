@@ -31,12 +31,19 @@
 					$artRow = $artRS->fetch_assoc();
 					$artist = new Artist($artRow);
 
-					$fm->updateFolderForAlbum($_SESSION['groupID'], $artist->getArtistID(), $artist->getName(), $album->getAlbumID(), $album->getName(), $_POST['name']);
+					if (!empty($_FILES['file']['name'])) {
+						$result = $fm->uploadImageForAlbum($_SESSION['groupID'], $artist->getArtistID(), $artist->getName(), $_GET['al'], $_POST['name'], $_FILES['file']['tmp_name']);
+					}
+
+					if($result == "1") {
+						header("location:albumDetails.php?al=" . $_GET['al']);
+					} else {
+						echo $result;
+						$error = "There was a problem uploading the album image";
+					}
 				} else {
 					$error = "Folder not created.";
 				}
-
-				header("location:albumDetails.php?al=" . $_GET['al']);
 			} else {
 				$error = "There was a problem updating the album";
 			}
@@ -57,8 +64,14 @@
 		while($artRow = $artRS->fetch_assoc()) {
 			$artist = new Artist($artRow);
 			$artistArray[$artist->getArtistID()] = $artist;
+
+			if($artist->getArtistID() == $album->getArtistID()) {
+				$selectedArtist = $artist;
+			}
 		}
 	}
+
+	$imageCoverExists = $fm->getImagePathForAlbum($_SESSION['groupID'], $selectedArtist->getArtistID(), $selectedArtist->getName(), $albumID, $albumName);
 ?>
 <html>
 <head>
@@ -93,7 +106,7 @@
 	</div>
 	<div class="albumContent">
 		<h2>Album Info</h2>
-		<form action="editAlbum.php?al=<? echo $album->getAlbumID() ?>" method="post">
+		<form action="editAlbum.php?al=<? echo $album->getAlbumID() ?>" method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
 					<td>Artist:</td>
@@ -116,8 +129,12 @@
 					<td><input type="text" name="name" value="<? echo $album->getName() ?>"/></td>
 				</tr>
 				<tr>
-					<td>Year Released</td>
+					<td>Year Released:</td>
 					<td><input type="text" name="year" value="<? echo $album->getYearReleased() ?>" /></td>
+				</tr>
+				<tr>
+					<td>Upload Album Cover:</td>
+					<td><? if($imageCoverExists == "0") { ?><input type="file" name="file" id="file" /><? } ?>  </td>
 				</tr>
 			</table>
 			<div class="submitAlbum">
