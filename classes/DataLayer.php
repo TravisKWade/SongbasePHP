@@ -7,11 +7,8 @@ class DataLayer {
 		Constructor
 	*********************/
 	public function __construct() {
-		//$this->$db = mysql_connect('branvisc.ipowermysql.com','kitawolf','marshal72');
-		//$this->db = mysql_connect('localhost','root','kitawolf');
-
-		//$this->db = new mysqli('branvisc.ipowermysql.com','kitawolf','marshal72', 'trail_guide');
-		$this->db = new mysqli('localhost','root','kitawolf', 'songbase');
+		$this->db = new mysqli('branvisc.ipowermysql.com','branvisc','marshal72!@', 'songbase');
+		//$this->db = new mysqli('localhost','root','kitawolf', 'songbase');
 
 		// Check connection
 		if ($this->db->connect_error) {

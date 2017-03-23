@@ -2,12 +2,21 @@
    width:300px;
    margin-left:auto;
    margin-right:auto;
+   margin-top: 30px;
 }
 
 .login input[type="submit"] {
    width:100%;
    margin-left:auto;
    margin-right:auto;
+}
+
+.login input[type="text"] {
+   width:150px;
+}
+
+.login input[type="password"] {
+   width:150px;
 }
 
 .login table {
