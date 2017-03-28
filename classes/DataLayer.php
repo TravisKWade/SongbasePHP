@@ -7,8 +7,8 @@ class DataLayer {
 		Constructor
 	*********************/
 	public function __construct() {
-		$this->db = new mysqli('branvisc.ipowermysql.com','branvisc','marshal72!@', 'songbase');
-		//$this->db = new mysqli('localhost','root','kitawolf', 'songbase');
+		//$this->db = new mysqli('branvisc.ipowermysql.com','branvisc','marshal72!@', 'songbase');
+		$this->db = new mysqli('localhost','root','kitawolf', 'songbase');
 
 		// Check connection
 		if ($this->db->connect_error) {
@@ -261,7 +261,24 @@ class DataLayer {
 	}
 
 	public function updateRecordingForUser($userID, $recordingID, $artistID, $albumID, $month, $day, $year) {
-		$sql = "update recordings set artist_id = {$artistID}, album_id = {$albumID}, day_recorded = {$day}, year_recorded = {$year}, month_recorded = {$month} where id = {$recordingID} and user_id = {$userID}";
+		$initSQL = "update recordings set artist_id = {$artistID}, album_id = {$albumID}";
+		
+		if ($month != null) {
+			$initSQL = $initSQL .  ", month_recorded = {$month}";
+		}
+
+		if ($day != null) {
+			$initSQL = $initSQL .  ", day_recorded = {$day}";
+		}
+
+		if ($year != null) {
+			$initSQL = $initSQL .  ", year_recorded = {$year}";
+		}
+
+		$where = " where id = {$recordingID} and user_id = {$userID}";
+
+		$sql = $initSQL . $where;
+
 		$rs = $this->db->query($sql);
 
 		if ($rs != null) {

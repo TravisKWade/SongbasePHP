@@ -53,7 +53,7 @@
 		<h2>Album List</h2>
 		<?
 			foreach($albumArray as $album) {
-				echo "<a href='albumDetails.php?al={$album->getAlbumID()}'>{$album->getName()}</a><br /><br />";
+				echo "<a href='albumDetails.php?al={$album->getAlbumID()}'>{$album->getName()}</a><br />";
 			}
 		?>
 	</div>

@@ -9,8 +9,8 @@
 	color: #fff;
 	text-shadow: 1px 1px #000;
 	text-decoration: none;
-	padding:15px;
-	height:25px;
+	margin-top:15px;
+	padding-left:15px;
 }
 
 .albumCover {
