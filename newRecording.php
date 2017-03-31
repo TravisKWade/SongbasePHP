@@ -10,7 +10,7 @@
 
 	if(!isset($_SESSION['user']) || !isset($_SESSION['userID'])) {
 		header("location:login.php");
-	} 
+	}
 
 	$error = "";
 	$db = new DataLayer();
@@ -20,16 +20,16 @@
 	$row = $rs->fetch_assoc();
 	$song = new Song($row);
 
-	if(!empty($_POST['submit'])){	
+	if(!empty($_POST['submit'])){
 		$rs = $db->createRecordingForUser($_SESSION['groupID'], $_GET['song'], $_POST['artist'], $_POST['album'], $_POST['month'], $_POST['day'], $_POST['year']);
-		
+
 		if($rs != null) {
 			if ($_FILES['file']['name']) {
 				$recordingID = $db->getLastRecordingIDForSong($_GET['song'], $_POST['artist'], $_POST['album']);
 				$artRS = $db->getArtistForID($_SESSION['groupID'], $_POST['artist']);
 				$alRS = $db->getAlbumForID($_SESSION['groupID'], $_POST['album']);
 
-				$target_path = $target_path . basename( $_FILES['file']['name']); 
+				$target_path = $target_path . basename( $_FILES['file']['name']);
 
 				if ($artRS != null) {
 					$artist = new Artist($artRS->fetch_assoc());
@@ -53,7 +53,7 @@
 		} else {
 			$error = "There was a problem creating the recording";
 		}
-		
+
 	}
 
 	$artistArray = array();
@@ -69,7 +69,8 @@
 	$albumArray = array();
 
 	if ($_GET['art'] == null) {
-		$artist = array_values($artistArray)[0];
+		$artists = array_values($artistArray);
+		$artist = $artists[0];
 		$alRS = $db->getAlbumsForArtist($artist->getArtistID());
 	} else {
 		$alRS = $db->getAlbumsForArtist($_GET['art']);
