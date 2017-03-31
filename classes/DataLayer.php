@@ -13,7 +13,7 @@ class DataLayer {
 		// Check connection
 		if ($this->db->connect_error) {
 		    die("Connection failed: " . $conn->connect_error);
-		} 
+		}
 	}
 
 	function __destruct() {
@@ -28,11 +28,11 @@ class DataLayer {
 	public function loginUser($email, $password) {
 		$sql = "select * from users where username='{$email}' and password='{$password}' and active=1";
 		$rs = $this->db->query($sql);
-		
+
 		if ($rs->num_rows > 0) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -47,7 +47,7 @@ class DataLayer {
 		if ($rs->num_rows > 0) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -58,7 +58,7 @@ class DataLayer {
 		if ($rs->num_rows > 0) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -69,7 +69,7 @@ class DataLayer {
 		if ($rs != null) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -80,7 +80,7 @@ class DataLayer {
 		if ($rs != null) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -95,7 +95,7 @@ class DataLayer {
 		if ($rs->num_rows > 0) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -106,7 +106,7 @@ class DataLayer {
 		if ($rs != null) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -117,7 +117,7 @@ class DataLayer {
 		if ($rs != null) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -132,7 +132,7 @@ class DataLayer {
 		if ($rs->num_rows > 0) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -143,7 +143,7 @@ class DataLayer {
 		if ($rs->num_rows > 0) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -154,7 +154,7 @@ class DataLayer {
 		if ($rs != null) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -165,7 +165,7 @@ class DataLayer {
 		if ($rs != null) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -180,7 +180,7 @@ class DataLayer {
 		if ($rs->num_rows > 0) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -191,30 +191,30 @@ class DataLayer {
 		if ($rs->num_rows > 0) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
 	public function getRecordingsForAlbum($albumID) {
 		$sql = "select * from recordings where album_id = {$albumID}";
 		$rs = $this->db->query($sql);
-		
+
 		if ($rs->num_rows > 0) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
 	public function getLastRecordingIDForSong($songID, $artistID, $albumID) {
 		$sql = "select id from recordings where song_id = {$songID} and artist_id = {$artistID} and album_id = {$albumID} order by timestamp desc";
 		$rs = $this->db->query($sql);
-		
+
 		if ($rs->num_rows > 0) {
 			$row = $rs->fetch_assoc();
 			return $row['id'];
 		}
-			
+
 		return;
 	}
 
@@ -225,7 +225,7 @@ class DataLayer {
 		if ($rs->num_rows > 0) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -250,19 +250,19 @@ class DataLayer {
 
 		$valuesSQL = $valuesSQL . ")";
 		$sql = $insertSQL . $valuesSQL;
-		
+		echo $sql;
 		$rs = $this->db->query($sql);
 
 		if ($rs != null) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
 	public function updateRecordingForUser($userID, $recordingID, $artistID, $albumID, $month, $day, $year) {
 		$initSQL = "update recordings set artist_id = {$artistID}, album_id = {$albumID}";
-		
+
 		if ($month != null) {
 			$initSQL = $initSQL .  ", month_recorded = {$month}";
 		}
@@ -284,7 +284,7 @@ class DataLayer {
 		if ($rs != null) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -309,7 +309,7 @@ class DataLayer {
 		if ($rs->num_rows > 0) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -324,7 +324,7 @@ class DataLayer {
 		if ($rs->num_rows > 0) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -335,7 +335,7 @@ class DataLayer {
 		if ($rs->num_rows > 0) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -347,7 +347,7 @@ class DataLayer {
 			$artRow = $rs->fetch_assoc();
 			return $artRow['id'];
 		}
-			
+
 		return;
 	}
 
@@ -358,7 +358,7 @@ class DataLayer {
 		if ($rs != null) {
 			return $this->getArtistIDForName($userID, $artistName);
 		}
-			
+
 		return;
 	}
 
@@ -369,7 +369,7 @@ class DataLayer {
 		if ($rs != null) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -384,7 +384,7 @@ class DataLayer {
 		if ($rs->num_rows > 0) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -395,7 +395,7 @@ class DataLayer {
 		if ($rs->num_rows > 0) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -406,7 +406,7 @@ class DataLayer {
 		if ($rs->num_rows > 0) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
@@ -418,7 +418,7 @@ class DataLayer {
 			$albumRow = $rs->fetch_assoc();
 			return $albumRow['id'];
 		}
-			
+
 		return;
 	}
 
@@ -429,7 +429,7 @@ class DataLayer {
 		if ($rs != null) {
 			return $this->getAlbumIDForName($userID, $name, $artistID);
 		}
-			
+
 		return;
 	}
 
@@ -440,21 +440,10 @@ class DataLayer {
 		if ($rs != null) {
 			return $rs;
 		}
-			
+
 		return;
 	}
 
 }
 
 ?>
-
-
-
-
-
-
-
-
-
-
-

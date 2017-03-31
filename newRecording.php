@@ -21,7 +21,7 @@
 	$song = new Song($row);
 
 	if(!empty($_POST['submit'])){
-		$rs = $db->createRecordingForUser($_SESSION['groupID'], $_GET['song'], $_POST['artist'], $_POST['album'], $_POST['month'], $_POST['day'], $_POST['year']);
+		$rs = $db->createRecordingForUser($_SESSION['groupID'], $_GET['song'], $_POST['artistSelect'], $_POST['album'], $_POST['month'], $_POST['day'], $_POST['year']);
 
 		if($rs != null) {
 			if ($_FILES['file']['name']) {
@@ -69,8 +69,7 @@
 	$albumArray = array();
 
 	if ($_GET['art'] == null) {
-		$artists = array_values($artistArray);
-		$artist = $artists[0];
+		$artist = reset($artistArray);
 		$alRS = $db->getAlbumsForArtist($artist->getArtistID());
 	} else {
 		$alRS = $db->getAlbumsForArtist($_GET['art']);
